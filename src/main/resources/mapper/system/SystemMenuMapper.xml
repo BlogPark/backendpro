@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yongming.backendpro.system.mapper.SystemMenuMapper">
+    <resultMap id="menumap" type="com.yongming.backendpro.system.model.SystemMenuModel">
+        <id column="id" property="id"/>
+        <result column="fatherid" property="fatherId"/>
+        <result column="menuname" property="menuName"/>
+        <result column="menutype" property="menuType"/>
+        <result column="menucontrollers" property="menuControllers"/>
+        <result column="menurouter" property="menuRouter"/>
+        <result column="menuicon" property="menuIcon"/>
+        <result column="menustatus" property="menuStatus"/>
+        <result column="createtime" property="createTime"/>
+    </resultMap>
+    <sql id="basecolumn">
+        id,fatherid,menuname,menutype,menucontrollers,menurouter,menuicon,menustatus,createtime
+    </sql>
+    <select id="getAllUsedMenu" resultMap="menumap">
+        select
+        <include refid="basecolumn"/>
+        from systemmenu
+        where menustatus=1
+    </select>
+
+</mapper>
