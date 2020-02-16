@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yongming.backendpro.drools.mapper.EntityDetailMapper">
+    <resultMap id="detailmap" type="com.yongming.backendpro.drools.model.EntityDetailModel">
+        <id column="id" property="id"/>
+        <result column="entityid" property="entityId"/>
+        <result column="entityname" property="entityName"/>
+        <result column="fieldname" property="fieldName"/>
+        <result column="usageexample" property="usageExample"/>
+        <result column="fielddesc" property="fieldDesc"/>
+        <result column="fieldtype" property="fieldType"/>
+        <result column="createtime" property="createTime"/>
+    </resultMap>
+    <sql id="basecolumn">
+        id
+        ,
+        entityid,
+        entityname,
+        fieldname,
+        usageexample,
+        fielddesc,
+        fieldtype,
+        createtime
+    </sql>
+    <select id="getEntityDetailsByEntityID" resultMap="detailmap"
+            parameterType="int">
+        select
+        <include refid="basecolumn"/>
+        from drools_entitydetail
+        where entityid=#{entityId}
+    </select>
+
+    <select id="getSingleEntityDetailById" resultMap="detailmap"
+            parameterType="int">
+        select
+        <include refid="basecolumn"/>
+        from drools_entitydetail
+        where entityid=#{id}
+    </select>
+
+    <insert id="addNewEntityDetai">
+        insert into drools_entitydetail(entityid,
+                                        entityname,
+                                        fieldname,
+                                        usageexample,
+                                        fielddesc,
+                                        fieldtype,
+                                        createtime
+        )
+        value
+        (
+        #{entityId}
+        ,
+        #{entityName}
+        ,
+        #{fieldName}
+        ,
+        #{usageExample}
+        ,
+        #{fieldDesc}
+        ,
+        #{fieldType}
+        ,
+        #{createTime}
+        )
+    </insert>
+
+    <update id="updateEntityDetailByID" parameterType="com.yongming.backendpro.drools.model.EntityDetailModel">
+        update drools_entitydetail
+        set entityid=#{entityId}
+                ,
+            entityname=#{entityName}
+                ,
+            fieldname= #{fieldName}
+                ,
+            usageexample=#{usageExample}
+                ,
+            fielddesc= #{fieldDesc}
+                ,
+            fieldtype= #{fieldType}
+        where id = #{id}
+    </update>
+
+</mapper>
