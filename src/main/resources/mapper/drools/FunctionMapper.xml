@@ -1,92 +1,109 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.yongming.backendpro.business.mapper.PinBoardMapper">
-    <resultMap id="pinboardmap" type="com.yongming.backendpro.business.model.PinBoardModel">
+<mapper namespace="com.yongming.backendpro.drools.mapper.FunctionMapper">
+    <resultMap id="functionmap" type="com.yongming.backendpro.drools.model.FunctionModel">
         <id column="id" property="id"/>
-        <result column="title" property="title"/>
-        <result column="content" property="content"/>
-        <result column="remind" property="remind"/>
-        <result column="remindtime" property="remindTime"/>
-        <result column="cacleremind" property="cacleRemind"/>
+        <result column="functionname" property="functionName"/>
+        <result column="functiondesc" property="functionDesc"/>
+        <result column="functioncontent" property="functionContent"/>
+        <result column="quoteentities" property="quoteEntities"/>
+        <result column="returntype" property="returnType"/>
+        <result column="functionparamterdesc" property="functionParamterDesc"/>
+        <result column="usageexample" property="usageExample"/>
+        <result column="groupid" property="groupId"/>
+        <result column="groupname" property="groupName"/>
         <result column="createtime" property="createTime"/>
-        <result column="userid" property="userId"/>
-        <result column="username" property="userName"/>
-        <result column="pinstatus" property="pinStatus"/>
     </resultMap>
     <sql id="basecolumn">
         id
         ,
-        title,
-        content,
-        remind,
-        remindtime,
-        cacleremind,
-        createtime,
-        userid,
-        username,
-        pinstatus
+        functionname,
+        functiondesc,
+        functioncontent,
+        quoteentities,
+        returntype,
+        functionparamterdesc,
+        usageexample,
+        groupid,
+        groupname,
+        createtime
     </sql>
-    <select id="getAllPinboard" resultMap="pinboardmap"
-            parameterType="com.yongming.backendpro.business.model.PinBoardModel">
+    <select id="getFunctionByIds" resultMap="functionmap"
+            parameterType="java.util.List">
         select
         <include refid="basecolumn"/>
-        from pinboard
-        where pinstatus=1 and userid=#{userId}
-        order by createtime desc
+        from drools_function
+        where id in
+        <foreach collection="ids" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
     </select>
 
-    <select id="getRemindPinboard" resultMap="pinboardmap"
-            parameterType="com.yongming.backendpro.business.model.PinBoardModel">
+    <select id="getFunctionByID" resultType="com.yongming.backendpro.drools.model.FunctionModel"
+            parameterType="int">
         select
         <include refid="basecolumn"/>
-        from pinboard
-        where pinstatus=1 and userid=#{userId} and cacleremind !=1 and  remindtime &gt; now() and remind=1
-        order by remindtime asc
+        from drools_function
+        where id=#{id}
     </select>
 
-    <insert id="addNewPinboard">
-        insert into pinboard(title,
-                             content,
-                             remind,
-                             remindtime,
-                             cacleremind,
-                             createtime,
-                             userid,
-                             username,
-                             pinstatus
+    <insert id="addNewdata">
+        insert into drools_function(functionname,
+                                    functiondesc,
+                                    functioncontent,
+                                    quoteentities,
+                                    returntype,
+                                    functionparamterdesc,
+                                    usageexample,
+                                    groupid,
+                                    groupname,
+                                    createtime
         )
         value
         (
-        #{title}
+        #{functionName}
         ,
-        #{content}
+        #{functionDesc}
         ,
-        #{remind}
+        #{functionContent}
         ,
-        #{remindTime}
+        #{quoteEntities}
         ,
-        #{cacleRemind}
+        #{returnType}
+        ,
+        #{functionParamterDesc}
+        ,
+        #{usageExample}
+        ,
+        #{groupId}
+        ,
+        #{groupName}
         ,
         #{createTime}
-        ,
-        #{userId}
-        ,
-        #{userName}
-        ,
-        #{pinStatus}
         )
     </insert>
 
-    <update id="updatePinStatus" parameterType="com.yongming.backendpro.business.model.PinBoardModel">
-        update pinboard
-        set pinstatus=#{pinStatus}
-        where   id=#{id}
+    <update id="updateFunction" parameterType="com.yongming.backendpro.business.model.PinBoardModel">
+        update drools_function
+        set functionname=#{functionName}
+                ,
+            functiondesc= #{functionDesc}
+                ,
+            functioncontent= #{functionContent}
+                ,
+            quoteentities=#{quoteEntities}
+                ,
+            returntype= #{returnType}
+                ,
+            functionparamterdesc=#{functionParamterDesc}
+                ,
+            usageexample= #{usageExample}
+                ,
+            groupid=#{groupId}
+                ,
+            groupname=#{groupName}
+        where id = #{id}
     </update>
 
-    <update id="updatePinRemind" parameterType="com.yongming.backendpro.business.model.PinBoardModel">
-        update pinboard
-        set cacleremind=1
-        where   id=#{id}
-    </update>
 </mapper>

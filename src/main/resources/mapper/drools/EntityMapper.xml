@@ -1,92 +1,83 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.yongming.backendpro.business.mapper.PinBoardMapper">
-    <resultMap id="pinboardmap" type="com.yongming.backendpro.business.model.PinBoardModel">
+<mapper namespace="com.yongming.backendpro.drools.mapper.EntityMapper">
+    <resultMap id="entitymap" type="com.yongming.backendpro.drools.model.EntityModel">
         <id column="id" property="id"/>
-        <result column="title" property="title"/>
-        <result column="content" property="content"/>
-        <result column="remind" property="remind"/>
-        <result column="remindtime" property="remindTime"/>
-        <result column="cacleremind" property="cacleRemind"/>
-        <result column="createtime" property="createTime"/>
-        <result column="userid" property="userId"/>
-        <result column="username" property="userName"/>
-        <result column="pinstatus" property="pinStatus"/>
+        <result column="entityname" property="entityName"/>
+        <result column="entitypackage" property="entityPackage"/>
+        <result column="entitydesc" property="entityDesc"/>
+        <result column="eneityremark" property="eneityRemark"/>
+        <result column="groupid" property="groupId"/>
+        <result column="groupname" property="groupName"/>
+        <result column="createTime" property="createTime"/>
     </resultMap>
     <sql id="basecolumn">
         id
         ,
-        title,
-        content,
-        remind,
-        remindtime,
-        cacleremind,
-        createtime,
-        userid,
-        username,
-        pinstatus
+        entityname,
+        entitypackage,
+        entitydesc,
+        eneityremark,
+        groupid,
+        groupname,
+        createtime
     </sql>
-    <select id="getAllPinboard" resultMap="pinboardmap"
-            parameterType="com.yongming.backendpro.business.model.PinBoardModel">
+    <select id="getEntityListByIds" resultMap="entitymap"
+            parameterType="java.util.List">
         select
         <include refid="basecolumn"/>
-        from pinboard
-        where pinstatus=1 and userid=#{userId}
-        order by createtime desc
+        from drools_entity
+        where id in
+        <foreach collection="idlist" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
     </select>
 
-    <select id="getRemindPinboard" resultMap="pinboardmap"
-            parameterType="com.yongming.backendpro.business.model.PinBoardModel">
+    <select id="getSingleEntityByID" resultType="com.yongming.backendpro.drools.model.EntityModel"
+            parameterType="int">
         select
         <include refid="basecolumn"/>
-        from pinboard
-        where pinstatus=1 and userid=#{userId} and cacleremind !=1 and  remindtime &gt; now() and remind=1
-        order by remindtime asc
+        from drools_entity
+        where id=#{id}
     </select>
 
-    <insert id="addNewPinboard">
-        insert into pinboard(title,
-                             content,
-                             remind,
-                             remindtime,
-                             cacleremind,
-                             createtime,
-                             userid,
-                             username,
-                             pinstatus
+    <insert id="addNewEntity">
+        insert into pinboard(entityname,
+                             entitypackage,
+                             entitydesc,
+                             eneityremark,
+                             groupid,
+                             groupname,
+                             createtime
         )
         value
         (
-        #{title}
+        #{entityName}
         ,
-        #{content}
+        #{entityPackage}
         ,
-        #{remind}
+        #{entityDesc}
         ,
-        #{remindTime}
+        #{eneityRemark}
         ,
-        #{cacleRemind}
+        #{groupId}
+        ,
+        #{groupName}
         ,
         #{createTime}
-        ,
-        #{userId}
-        ,
-        #{userName}
-        ,
-        #{pinStatus}
         )
     </insert>
 
-    <update id="updatePinStatus" parameterType="com.yongming.backendpro.business.model.PinBoardModel">
-        update pinboard
-        set pinstatus=#{pinStatus}
-        where   id=#{id}
+    <update id="updateEntityByID" parameterType="com.yongming.backendpro.drools.model.EntityModel">
+        update drools_entity
+        set entityname=#{entityName},
+            entitypackage= #{entityPackage},
+            entitydesc=#{entityDesc},
+            eneityremark=#{eneityRemark},
+            groupid= #{groupId},
+            groupname=#{groupName}
+        where id = #{id}
     </update>
 
-    <update id="updatePinRemind" parameterType="com.yongming.backendpro.business.model.PinBoardModel">
-        update pinboard
-        set cacleremind=1
-        where   id=#{id}
-    </update>
 </mapper>

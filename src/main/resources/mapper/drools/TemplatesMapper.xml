@@ -1,92 +1,85 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.yongming.backendpro.business.mapper.PinBoardMapper">
-    <resultMap id="pinboardmap" type="com.yongming.backendpro.business.model.PinBoardModel">
+<mapper namespace="com.yongming.backendpro.drools.mapper.TemplatesMapper">
+    <resultMap id="templatemap" type="com.yongming.backendpro.drools.model.TemplatesModel">
         <id column="id" property="id"/>
-        <result column="title" property="title"/>
-        <result column="content" property="content"/>
-        <result column="remind" property="remind"/>
-        <result column="remindtime" property="remindTime"/>
-        <result column="cacleremind" property="cacleRemind"/>
+        <result column="templatename" property="title"/>
+        <result column="templatedesc" property="content"/>
+        <result column="quoteentities" property="remind"/>
+        <result column="canchanged" property="remindTime"/>
+        <result column="templatecontent" property="cacleRemind"/>
         <result column="createtime" property="createTime"/>
-        <result column="userid" property="userId"/>
-        <result column="username" property="userName"/>
-        <result column="pinstatus" property="pinStatus"/>
+        <result column="quotefunctions" property="userId"/>
     </resultMap>
     <sql id="basecolumn">
         id
         ,
-        title,
-        content,
-        remind,
-        remindtime,
-        cacleremind,
+        templatename,
+        templatedesc,
+        quoteentities,
+        canchanged,
+        templatecontent,
         createtime,
-        userid,
-        username,
-        pinstatus
+        quotefunctions
     </sql>
-    <select id="getAllPinboard" resultMap="pinboardmap"
-            parameterType="com.yongming.backendpro.business.model.PinBoardModel">
+    <select id="getTemplateList" resultMap="templatemap">
         select
         <include refid="basecolumn"/>
-        from pinboard
+        from drools_templates
         where pinstatus=1 and userid=#{userId}
         order by createtime desc
     </select>
 
-    <select id="getRemindPinboard" resultMap="pinboardmap"
-            parameterType="com.yongming.backendpro.business.model.PinBoardModel">
+    <select id="getTemplateModel" resultType="com.yongming.backendpro.drools.model.TemplatesModel"
+            parameterType="int">
         select
         <include refid="basecolumn"/>
-        from pinboard
-        where pinstatus=1 and userid=#{userId} and cacleremind !=1 and  remindtime &gt; now() and remind=1
-        order by remindtime asc
+        from drools_templates
+        where id-=#{id}
     </select>
 
-    <insert id="addNewPinboard">
-        insert into pinboard(title,
-                             content,
-                             remind,
-                             remindtime,
-                             cacleremind,
-                             createtime,
-                             userid,
-                             username,
-                             pinstatus
+    <insert id="addNewTemplate">
+        insert into drools_templates(templatename,
+                                     templatedesc,
+                                     quoteentities,
+                                     canchanged,
+                                     templatecontent,
+                                     createtime,
+                                     quotefunctions
         )
         value
         (
-        #{title}
+        #{templateName}
         ,
-        #{content}
+        #{templateDesc}
         ,
-        #{remind}
+        #{quoteEntities}
         ,
-        #{remindTime}
+        #{canChanged}
         ,
-        #{cacleRemind}
+        #{templateContent}
         ,
         #{createTime}
         ,
-        #{userId}
-        ,
-        #{userName}
-        ,
-        #{pinStatus}
+        #{quoteFunctions}
         )
     </insert>
 
-    <update id="updatePinStatus" parameterType="com.yongming.backendpro.business.model.PinBoardModel">
-        update pinboard
-        set pinstatus=#{pinStatus}
-        where   id=#{id}
+    <update id="updateTemplate" parameterType="com.yongming.backendpro.drools.model.TemplatesModel">
+        update drools_templates
+        set templatename=#{templateName}
+                ,
+            templatedesc=#{templateDesc}
+                ,
+            quoteentities=#{quoteEntities}
+                ,
+            canchanged= #{canChanged}
+                ,
+            templatecontent=#{templateContent}
+                ,
+            quotefunctions=#{quoteFunctions}
+        where id = #{id}
     </update>
 
-    <update id="updatePinRemind" parameterType="com.yongming.backendpro.business.model.PinBoardModel">
-        update pinboard
-        set cacleremind=1
-        where   id=#{id}
-    </update>
 </mapper>
