@@ -35,7 +35,7 @@
         <include refid="basecolumn"/>
         from drools_function
         where id in
-        <foreach collection="ids" index="index" item="item" open="(" separator="," close=")">
+        <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
             #{item}
         </foreach>
     </select>

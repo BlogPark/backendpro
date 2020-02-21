@@ -29,7 +29,7 @@
         <include refid="basecolumn"/>
         from drools_entity
         where id in
-        <foreach collection="idlist" index="index" item="item" open="(" separator="," close=")">
+        <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
             #{item}
         </foreach>
     </select>

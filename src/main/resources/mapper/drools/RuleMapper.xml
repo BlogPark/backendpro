@@ -23,18 +23,17 @@
         createtime,
         quotefunctions
     </sql>
-    <select id="getRulesByIds" resultMap="rulemap"
-            parameterType="java.util.List">
+    <select id="getRulesByIds" resultMap="rulemap">
         select
         <include refid="basecolumn"/>
         from drools_rules
         where id in
-        <foreach collection="idlist" index="index" item="item" open="(" separator="," close=")">
+        <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
             #{item}
         </foreach>
     </select>
 
-    <select id="getRuleById" resultMap="rulemap"
+    <select id="getRuleById" resultType="com.yongming.backendpro.drools.model.RuleModel"
             parameterType="int">
         select
         <include refid="basecolumn"/>

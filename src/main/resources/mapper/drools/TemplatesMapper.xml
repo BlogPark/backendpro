@@ -27,8 +27,6 @@
         select
         <include refid="basecolumn"/>
         from drools_templates
-        where pinstatus=1 and userid=#{userId}
-        order by createtime desc
     </select>
 
     <select id="getTemplateModel" resultType="com.yongming.backendpro.drools.model.TemplatesModel"

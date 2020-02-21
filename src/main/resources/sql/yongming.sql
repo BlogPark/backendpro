@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : localhost
-Source Server Version : 50725
-Source Host           : localhost:3306
+Source Server         : local
+Source Server Version : 50724
+Source Host           : 127.0.0.1:3306
 Source Database       : yongming
 
 Target Server Type    : MYSQL
-Target Server Version : 50725
+Target Server Version : 50724
 File Encoding         : 65001
 
-Date: 2020-02-16 16:01:55
+Date: 2020-02-17 14:24:10
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -93,6 +93,25 @@ CREATE TABLE `drools_group` (
 
 -- ----------------------------
 -- Records of drools_group
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for drools_product
+-- ----------------------------
+DROP TABLE IF EXISTS `drools_product`;
+CREATE TABLE `drools_product` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `productcode` varchar(255) DEFAULT NULL COMMENT '产品编码',
+  `productname` varchar(255) DEFAULT NULL COMMENT '产品名称',
+  `versioncode` varchar(255) DEFAULT NULL COMMENT '版本号',
+  `rulefilepath` varchar(255) DEFAULT NULL COMMENT '规则文件存放位置',
+  `quoterules` varchar(255) DEFAULT NULL COMMENT '引用规则列表',
+  `createtime` datetime DEFAULT NULL COMMENT '创建时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+-- Records of drools_product
 -- ----------------------------
 
 -- ----------------------------

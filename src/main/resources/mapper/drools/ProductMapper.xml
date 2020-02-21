@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yongming.backendpro.drools.mapper.ProductMapper">
+    <resultMap id="rulemap" type="com.yongming.backendpro.drools.model.ProductModel">
+        <id column="id" property="id"/>
+        <result column="productcode" property="productCode"/>
+        <result column="productname" property="productName"/>
+        <result column="versioncode" property="versionCode"/>
+        <result column="rulefilepath" property="ruleFilePath"/>
+        <result column="blogpackage" property="blogPackage"/>
+        <result column="quoterules" property="quoteRules"/>
+        <result column="createtime" property="createTime"/>
+    </resultMap>
+    <sql id="basecolumn">
+        id
+        ,
+        productcode,
+        productname,
+        versioncode,
+        rulefilepath,
+        blogpackage,
+        quoterules,
+        createtime
+    </sql>
+    <select id="getProductList" resultMap="rulemap">
+        select
+        <include refid="basecolumn"/>
+        from drools_product
+    </select>
+
+    <select id="getProductById" resultType="com.yongming.backendpro.drools.model.ProductModel"
+            parameterType="int">
+        select
+        <include refid="basecolumn"/>
+        from drools_product
+        where id=#{id}
+    </select>
+
+    <insert id="addProduct">
+        insert into drools_product(productcode,
+                                   productname,
+                                   versioncode,
+                                   rulefilepath,
+                                   blogpackage,
+                                   quoterules,
+                                   createtime
+        )
+        value
+        (
+        #{productCode}
+        ,
+        #{productName}
+        ,
+        #{versionCode}
+        ,
+        #{ruleFilePath}
+        ,
+        #{blogPackage}
+        ,
+        #{quoteRules}
+        ,
+        #{createtime}
+        )
+    </insert>
+
+    <update id="updateProductById" parameterType="com.yongming.backendpro.drools.model.RuleModel">
+        update drools_product
+        set productcode=#{productCode}
+                ,
+            productname=#{productName}
+                ,
+            versioncode=#{versionCode}
+                ,
+            rulefilepath=#{ruleFilePath}
+                ,
+            quoterules=#{quoteRules}
+                ,
+            blogpackage=#{blogPackage}
+        where id = #{id}
+    </update>
+
+</mapper>

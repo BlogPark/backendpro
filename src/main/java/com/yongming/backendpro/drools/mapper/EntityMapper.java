@@ -8,10 +8,10 @@ public interface EntityMapper {
   /**
    * 按照ID列表查询实体信息
    *
-   * @param idlist
+   * @param list
    * @return
    */
-  List<EntityModel> getEntityListByIds(List<String> idlist);
+  List<EntityModel> getEntityListByIds(List<String> list);
 
   /**
    * 按照ID查询实体信息
