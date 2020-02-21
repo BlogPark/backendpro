@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50724
 File Encoding         : 65001
 
-Date: 2020-02-17 14:24:10
+Date: 2020-02-21 20:32:23
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -20,7 +20,7 @@ SET FOREIGN_KEY_CHECKS=0;
 -- ----------------------------
 DROP TABLE IF EXISTS `drools_entity`;
 CREATE TABLE `drools_entity` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `entityname` varchar(500) DEFAULT NULL COMMENT '实体名字',
   `entitypackage` varchar(500) DEFAULT NULL COMMENT '实体所在包名',
   `entitydesc` varchar(500) DEFAULT NULL COMMENT '实体描述',
@@ -29,11 +29,12 @@ CREATE TABLE `drools_entity` (
   `groupid` int(11) DEFAULT NULL COMMENT '分组id',
   `groupname` varchar(255) DEFAULT NULL COMMENT '分组名称',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='实体表';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COMMENT='实体表';
 
 -- ----------------------------
 -- Records of drools_entity
 -- ----------------------------
+INSERT INTO `drools_entity` VALUES ('1', 'DroolsTestModel', 'com.yongming.backendpro.drools.droolsmodel.DroolsTestModel', '测试实体', '备注字段', '2020-02-17 21:21:48', null, null);
 
 -- ----------------------------
 -- Table structure for drools_entitydetail
@@ -49,11 +50,16 @@ CREATE TABLE `drools_entitydetail` (
   `fieldtype` varchar(255) DEFAULT NULL COMMENT '字段类型',
   `createtime` datetime DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='实体描述表';
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COMMENT='实体描述表';
 
 -- ----------------------------
 -- Records of drools_entitydetail
 -- ----------------------------
+INSERT INTO `drools_entitydetail` VALUES ('1', '1', 'DroolsTestModel', 'name', '$d.name', '名字', 'String', '2020-02-17 21:23:07');
+INSERT INTO `drools_entitydetail` VALUES ('2', '1', 'DroolsTestModel', 'classname', '$d.classname', '班级名称', 'String', '2020-02-17 21:24:05');
+INSERT INTO `drools_entitydetail` VALUES ('3', '1', 'DroolsTestModel', 'age', '$d.age', '年龄', 'int', '2020-02-17 21:25:07');
+INSERT INTO `drools_entitydetail` VALUES ('4', '1', 'DroolsTestModel', 'hibbits', '$d:droolsmodel()\r\n$h:String() from $d.hibbits', '喜好列表', 'List', '2020-02-17 21:33:25');
+INSERT INTO `drools_entitydetail` VALUES ('5', '1', 'DroolsTestModel', 'result', '$d.result', '结果', 'String', '2020-02-17 21:34:15');
 
 -- ----------------------------
 -- Table structure for drools_function
@@ -105,14 +111,34 @@ CREATE TABLE `drools_product` (
   `productname` varchar(255) DEFAULT NULL COMMENT '产品名称',
   `versioncode` varchar(255) DEFAULT NULL COMMENT '版本号',
   `rulefilepath` varchar(255) DEFAULT NULL COMMENT '规则文件存放位置',
+  `blogpackage` varchar(255) DEFAULT NULL COMMENT '所属包名',
   `quoterules` varchar(255) DEFAULT NULL COMMENT '引用规则列表',
   `createtime` datetime DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of drools_product
 -- ----------------------------
+INSERT INTO `drools_product` VALUES ('1', 'P0001', '测试产品', '001', 'C:\\\\droolstemp', 'com.yongming.backendpro.drools', '1', '2020-02-17 21:20:31');
+
+-- ----------------------------
+-- Table structure for drools_product_rule
+-- ----------------------------
+DROP TABLE IF EXISTS `drools_product_rule`;
+CREATE TABLE `drools_product_rule` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `productid` int(11) DEFAULT NULL,
+  `productCode` varchar(255) DEFAULT NULL,
+  `ruleid` int(11) DEFAULT NULL,
+  `order` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+-- Records of drools_product_rule
+-- ----------------------------
+INSERT INTO `drools_product_rule` VALUES ('1', '1', 'P0001', '1', '1');
 
 -- ----------------------------
 -- Table structure for drools_rules
@@ -128,11 +154,12 @@ CREATE TABLE `drools_rules` (
   `quotefunctions` varchar(500) DEFAULT NULL COMMENT '引用函数集合',
   `createtime` datetime DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='规则表';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COMMENT='规则表';
 
 -- ----------------------------
 -- Records of drools_rules
 -- ----------------------------
+INSERT INTO `drools_rules` VALUES ('1', 'helloword', null, null, 'rule  helloword\r\n when\r\n $d:droolsmodel();\r\n then\r\n System.out.println(\"执行成功了！\"+$d.name);\r\n end', '1', null, '2020-02-17 21:47:24');
 
 -- ----------------------------
 -- Table structure for drools_templates
