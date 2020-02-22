@@ -97,6 +97,11 @@ public class droolsBusinessServiceImpl implements droolsBusinessService {
     return droolsTestModel;
   }
 
+  @Override
+  public void buildRules(String s) {
+
+  }
+
   private String getRuleContent(String ruleListStr, String pageString) {
     StringBuilder stringBuilder = new StringBuilder();
     List<RuleModel> ruleModelList = ruleMapper.getRulesByIds(Arrays.asList(ruleListStr.split(",")));

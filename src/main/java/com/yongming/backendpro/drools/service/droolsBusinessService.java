@@ -24,4 +24,6 @@ public interface droolsBusinessService {
    * @return
    */
   DroolsTestModel fireRuleFile(String productCode);
+
+    void buildRules(String s);
 }
