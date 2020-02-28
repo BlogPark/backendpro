@@ -1,7 +1,9 @@
 package com.yongming.backendpro.drools.service;
 
 import com.github.pagehelper.PageInfo;
+import com.yongming.backendpro.drools.model.EntityModel;
 import com.yongming.backendpro.drools.model.RuleModel;
+import com.yongming.backendpro.drools.vo.EntityVO;
 
 public interface droolsService {
   // 获取所有规则
@@ -20,5 +22,6 @@ public interface droolsService {
   // 添加分组信息
   // 提交实体变更申请
   // 查询实体变更申请
-
+  // 获取所有实体列表
+  PageInfo<EntityModel> getEntityList(EntityVO entityVO);
 }

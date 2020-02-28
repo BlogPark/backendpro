@@ -1,18 +1,21 @@
 package com.yongming.backendpro.drools.controller;
 
+import com.github.pagehelper.PageInfo;
 import com.yongming.backendpro.drools.droolsmodel.DroolsTestModel;
+import com.yongming.backendpro.drools.model.EntityModel;
 import com.yongming.backendpro.drools.model.ResultModel;
 import com.yongming.backendpro.drools.service.droolsBusinessService;
+import com.yongming.backendpro.drools.service.droolsService;
+import com.yongming.backendpro.drools.vo.EntityVO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/drools")
 public class HomeController {
 
   @Autowired private droolsBusinessService droolsBusinessService;
+  @Autowired private droolsService droolsService;
 
   @GetMapping("/write")
   public ResultModel writeRule() {
@@ -36,5 +39,10 @@ public class HomeController {
     ResultModel resultModel = new ResultModel();
     resultModel.setMessage(droolsTestModel.getName());
     return resultModel;
+  }
+
+  @PostMapping("/entitylist")
+  public PageInfo<EntityModel> getEntityList(@RequestBody EntityVO entityVO) {
+    return droolsService.getEntityList(entityVO);
   }
 }

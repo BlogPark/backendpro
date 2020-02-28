@@ -36,4 +36,12 @@ public interface EntityMapper {
    * @return
    */
   int updateEntityByID(EntityModel entityModel);
+
+  /**
+   * 查询实体列表
+   *
+   * @param entityModel
+   * @return
+   */
+  List<EntityModel> getEntityList(EntityModel entityModel);
 }

@@ -79,5 +79,23 @@
             groupname=#{groupName}
         where id = #{id}
     </update>
-
+    <select id="getEntityList" resultMap="entitymap" parameterType="com.yongming.backendpro.drools.model.EntityModel">
+        select
+        <include refid="basecolumn"/>
+        from drools_entity
+        <where>
+            <if test="id !=0">
+                id=#{id}
+            </if>
+            <if test="entityName !=null and entityName !=''">
+                and entityname=#{entityName}
+            </if>
+            <if test="groupId !=0">
+                and groupid= #{groupId}
+            </if>
+            <if test="groupName !=null and groupName !='' ">
+                and groupname=#{groupName}
+            </if>
+        </where>
+    </select>
 </mapper>
