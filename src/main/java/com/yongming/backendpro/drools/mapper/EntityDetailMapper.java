@@ -12,7 +12,7 @@ public interface EntityDetailMapper {
      * @param entityId
      * @return
      */
-    List<EntityDetailModel> getEntityDetailsByEntityID(@Param("entityId") int entityId);
+    List<EntityDetailModel> getEntityDetailsByEntityID(@Param("entityId") String entityId);
 
     /**
      * 根据ID查询单个实体字段的明细

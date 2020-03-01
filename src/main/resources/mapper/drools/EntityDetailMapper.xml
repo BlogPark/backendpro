@@ -24,7 +24,7 @@
         createtime
     </sql>
     <select id="getEntityDetailsByEntityID" resultMap="detailmap"
-            parameterType="int">
+            parameterType="java.lang.String">
         select
         <include refid="basecolumn"/>
         from drools_entitydetail
