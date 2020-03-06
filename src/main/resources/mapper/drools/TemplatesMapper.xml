@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.yongming.backendpro.drools.mapper.TemplatesMapper">
-    <resultMap id="templatemap" type="com.yongming.backendpro.drools.model.TemplatesModel">
+<mapper namespace="com.yongming.backendpro.project.drools.mapper.TemplatesMapper">
+    <resultMap id="templatemap" type="com.yongming.backendpro.project.drools.model.TemplatesModel">
         <id column="id" property="id"/>
         <result column="templatename" property="title"/>
         <result column="templatedesc" property="content"/>
@@ -29,7 +29,7 @@
         from drools_templates
     </select>
 
-    <select id="getTemplateModel" resultType="com.yongming.backendpro.drools.model.TemplatesModel"
+    <select id="getTemplateModel" resultType="com.yongming.backendpro.project.drools.model.TemplatesModel"
             parameterType="int">
         select
         <include refid="basecolumn"/>
@@ -64,7 +64,7 @@
         )
     </insert>
 
-    <update id="updateTemplate" parameterType="com.yongming.backendpro.drools.model.TemplatesModel">
+    <update id="updateTemplate" parameterType="com.yongming.backendpro.project.drools.model.TemplatesModel">
         update drools_templates
         set templatename=#{templateName}
                 ,

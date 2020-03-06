@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.yongming.backendpro.business.mapper.PinBoardMapper">
-    <resultMap id="pinboardmap" type="com.yongming.backendpro.business.model.PinBoardModel">
+<mapper namespace="com.yongming.backendpro.project.business.mapper.PinBoardMapper">
+    <resultMap id="pinboardmap" type="com.yongming.backendpro.project.business.model.PinBoardModel">
         <id column="id" property="id"/>
         <result column="title" property="title"/>
         <result column="content" property="content"/>
@@ -28,7 +28,7 @@
         pinstatus
     </sql>
     <select id="getAllPinboard" resultMap="pinboardmap"
-            parameterType="com.yongming.backendpro.business.model.PinBoardModel">
+            parameterType="com.yongming.backendpro.project.business.model.PinBoardModel">
         select
         <include refid="basecolumn"/>
         from pinboard
@@ -37,11 +37,11 @@
     </select>
 
     <select id="getRemindPinboard" resultMap="pinboardmap"
-            parameterType="com.yongming.backendpro.business.model.PinBoardModel">
+            parameterType="com.yongming.backendpro.project.business.model.PinBoardModel">
         select
         <include refid="basecolumn"/>
         from pinboard
-        where pinstatus=1 and userid=#{userId} and cacleremind !=1 and  remindtime &gt; now() and remind=1
+        where pinstatus=1 and userid=#{userId} and cacleremind !=1 and remindtime &gt; now() and remind=1
         order by remindtime asc
     </select>
 
@@ -78,15 +78,15 @@
         )
     </insert>
 
-    <update id="updatePinStatus" parameterType="com.yongming.backendpro.business.model.PinBoardModel">
+    <update id="updatePinStatus" parameterType="com.yongming.backendpro.project.business.model.PinBoardModel">
         update pinboard
         set pinstatus=#{pinStatus}
-        where   id=#{id}
+        where id = #{id}
     </update>
 
-    <update id="updatePinRemind" parameterType="com.yongming.backendpro.business.model.PinBoardModel">
+    <update id="updatePinRemind" parameterType="com.yongming.backendpro.project.business.model.PinBoardModel">
         update pinboard
         set cacleremind=1
-        where   id=#{id}
+        where id = #{id}
     </update>
 </mapper>

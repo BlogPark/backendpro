@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.yongming.backendpro.drools.mapper.FunctionMapper">
-    <resultMap id="functionmap" type="com.yongming.backendpro.drools.model.FunctionModel">
+<mapper namespace="com.yongming.backendpro.project.drools.mapper.FunctionMapper">
+    <resultMap id="functionmap" type="com.yongming.backendpro.project.drools.model.FunctionModel">
         <id column="id" property="id"/>
         <result column="functionname" property="functionName"/>
         <result column="functiondesc" property="functionDesc"/>
@@ -40,7 +40,7 @@
         </foreach>
     </select>
 
-    <select id="getFunctionByID" resultType="com.yongming.backendpro.drools.model.FunctionModel"
+    <select id="getFunctionByID" resultType="com.yongming.backendpro.project.drools.model.FunctionModel"
             parameterType="int">
         select
         <include refid="basecolumn"/>
@@ -84,7 +84,7 @@
         )
     </insert>
 
-    <update id="updateFunction" parameterType="com.yongming.backendpro.business.model.PinBoardModel">
+    <update id="updateFunction" parameterType="com.yongming.backendpro.project.business.model.PinBoardModel">
         update drools_function
         set functionname=#{functionName}
                 ,

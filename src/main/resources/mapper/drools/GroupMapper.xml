@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.yongming.backendpro.drools.mapper.GroupMapper">
-    <resultMap id="groupmap" type="com.yongming.backendpro.drools.model.GroupModel">
+<mapper namespace="com.yongming.backendpro.project.drools.mapper.GroupMapper">
+    <resultMap id="groupmap" type="com.yongming.backendpro.project.drools.model.GroupModel">
         <id column="id" property="id"/>
         <result column="groupname" property="groupName"/>
         <result column="groupdesc" property="groupDesc"/>
@@ -23,7 +23,7 @@
         from drools_group
     </select>
 
-    <select id="getGroupByid" resultType="com.yongming.backendpro.drools.model.GroupModel"
+    <select id="getGroupByid" resultType="com.yongming.backendpro.project.drools.model.GroupModel"
             parameterType="int">
         select
         <include refid="basecolumn"/>
@@ -49,7 +49,7 @@
         )
     </insert>
 
-    <update id="updateGroup" parameterType="com.yongming.backendpro.drools.model.GroupModel">
+    <update id="updateGroup" parameterType="com.yongming.backendpro.project.drools.model.GroupModel">
         update drools_group
         set pinstatus=#{groupName}
                 ,

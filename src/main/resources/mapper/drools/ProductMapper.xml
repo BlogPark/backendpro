@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.yongming.backendpro.drools.mapper.ProductMapper">
-    <resultMap id="rulemap" type="com.yongming.backendpro.drools.model.ProductModel">
+<mapper namespace="com.yongming.backendpro.project.drools.mapper.ProductMapper">
+    <resultMap id="rulemap" type="com.yongming.backendpro.project.drools.model.ProductModel">
         <id column="id" property="id"/>
         <result column="productcode" property="productCode"/>
         <result column="productname" property="productName"/>
@@ -29,7 +29,7 @@
         from drools_product
     </select>
 
-    <select id="getProductById" resultType="com.yongming.backendpro.drools.model.ProductModel"
+    <select id="getProductById" resultType="com.yongming.backendpro.project.drools.model.ProductModel"
             parameterType="int">
         select
         <include refid="basecolumn"/>
@@ -64,7 +64,7 @@
         )
     </insert>
 
-    <update id="updateProductById" parameterType="com.yongming.backendpro.drools.model.RuleModel">
+    <update id="updateProductById" parameterType="com.yongming.backendpro.project.drools.model.RuleModel">
         update drools_product
         set productcode=#{productCode}
                 ,
