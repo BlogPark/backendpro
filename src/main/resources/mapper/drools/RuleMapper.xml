@@ -5,6 +5,7 @@
     <resultMap id="rulemap" type="com.yongming.backendpro.project.drools.model.RuleModel">
         <id column="id" property="id"/>
         <result column="rulecode" property="ruleCode"/>
+        <result column="rulename" property="ruleName"/>
         <result column="rulegroup" property="ruleGroup"/>
         <result column="templateid" property="templateId"/>
         <result column="rulecontent" property="ruleContent"/>
@@ -16,6 +17,7 @@
         id
         ,
         rulecode,
+        rulename,
         rulegroup,
         templateid,
         rulecontent,
@@ -84,4 +86,23 @@
         where id = #{id}
     </update>
 
+    <select id="getRuleList" parameterType="com.yongming.backendpro.project.drools.model.RuleModel" resultMap="rulemap">
+        select
+        <include refid="basecolumn"/>
+        from drools_rules
+        <where>
+            <if test="id != 0">
+                id=#{id}
+            </if>
+            <if test="ruleCode != null and ruleCode != ''">
+                and rulecode=#{ruleCode}
+            </if>
+            <if test="ruleName != null and ruleName != ''">
+                and rulename=#{ruleName}
+            </if>
+            <if test="ruleGroup != null and ruleGroup != ''">
+                and rulegroup=#{ruleGroup}
+            </if>
+        </where>
+    </select>
 </mapper>

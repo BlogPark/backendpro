@@ -1,5 +1,6 @@
 package com.yongming.backendpro.project.drools.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.util.Date;
@@ -27,5 +28,6 @@ public class FunctionModel {
   /** f分组名称 */
   private String groupName;
   /** 创建时间 */
+  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   private Date createTime;
 }

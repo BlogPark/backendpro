@@ -10,7 +10,7 @@ public interface GroupMapper {
    *
    * @return
    */
-  List<GroupModel> getGroupList();
+  List<GroupModel> getGroupList(GroupModel groupModel);
   /**
    * 查询分组信息
    *

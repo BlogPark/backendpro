@@ -17,10 +17,19 @@
         grouptype,
         createtime
     </sql>
-    <select id="getGroupList" resultMap="groupmap">
+    <select id="getGroupList" resultMap="groupmap"
+            parameterType="com.yongming.backendpro.project.drools.model.GroupModel">
         select
         <include refid="basecolumn"/>
         from drools_group
+        <where>
+            <if test="id !=0">
+                id=#{id}
+            </if>
+            <if test="groupName != null and groupName!=''">
+                and groupname=#{groupName}
+            </if>
+        </where>
     </select>
 
     <select id="getGroupByid" resultType="com.yongming.backendpro.project.drools.model.GroupModel"

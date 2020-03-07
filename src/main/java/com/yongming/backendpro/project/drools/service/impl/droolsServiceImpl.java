@@ -2,15 +2,10 @@ package com.yongming.backendpro.project.drools.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.yongming.backendpro.project.drools.mapper.EntityDetailMapper;
-import com.yongming.backendpro.project.drools.mapper.EntityMapper;
-import com.yongming.backendpro.project.drools.mapper.RuleMapper;
-import com.yongming.backendpro.project.drools.model.EntityDetailModel;
-import com.yongming.backendpro.project.drools.model.EntityModel;
-import com.yongming.backendpro.project.drools.model.RuleModel;
+import com.yongming.backendpro.project.drools.mapper.*;
+import com.yongming.backendpro.project.drools.model.*;
 import com.yongming.backendpro.project.drools.service.droolsService;
-import com.yongming.backendpro.project.drools.vo.EntityVO;
-import com.yongming.backendpro.project.drools.vo.RuleVO;
+import com.yongming.backendpro.project.drools.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +16,9 @@ public class droolsServiceImpl implements droolsService {
   @Autowired EntityMapper entityMapper;
   @Autowired EntityDetailMapper entityDetailMapper;
   @Autowired RuleMapper ruleMapper;
+  @Autowired TemplatesMapper templatesMapper;
+  @Autowired FunctionMapper functionMapper;
+  @Autowired GroupMapper groupMapper;
 
   @Override
   public PageInfo<RuleModel> getAllRulesForPage(RuleVO ruleVO) {
@@ -33,6 +31,31 @@ public class droolsServiceImpl implements droolsService {
     List<RuleModel> list = ruleMapper.getRuleList(ruleModel);
     // 用PageInfo对结果进行包装
     PageInfo<RuleModel> page = new PageInfo<RuleModel>(list);
+    return page;
+  }
+
+  @Override
+  public PageInfo<TemplatesModel> getTemplateList(TemplateVO templateVO) {
+    PageHelper.startPage(templateVO.getPageIndex(), templateVO.getPageSize());
+    TemplatesModel templatesModel = new TemplatesModel();
+    templatesModel.setId(templateVO.getId());
+    templatesModel.setTemplateName(templateVO.getTemplateName());
+    List<TemplatesModel> list = templatesMapper.getTemplateList(templatesModel);
+    // 用PageInfo对结果进行包装
+    PageInfo<TemplatesModel> page = new PageInfo<>(list);
+    return page;
+  }
+
+  @Override
+  public PageInfo<FunctionModel> getFunctionList(FunctionVO functionVO) {
+    PageHelper.startPage(functionVO.getPageIndex(), functionVO.getPageSize());
+    FunctionModel functionModel = new FunctionModel();
+    functionModel.setId(functionVO.getId());
+    functionModel.setFunctionName(functionVO.getFunctionName());
+    functionModel.setFunctionDesc(functionVO.getFunctionDesc());
+    List<FunctionModel> list = functionMapper.getAllFunctionList(functionModel);
+    // 用PageInfo对结果进行包装
+    PageInfo<FunctionModel> page = new PageInfo<>(list);
     return page;
   }
 
@@ -53,5 +76,17 @@ public class droolsServiceImpl implements droolsService {
   @Override
   public List<EntityDetailModel> getEntityInfo(String id) {
     return entityDetailMapper.getEntityDetailsByEntityID(id);
+  }
+
+  @Override
+  public PageInfo<GroupModel> getGroupList(GroupVO groupVO) {
+    PageHelper.startPage(groupVO.getPageIndex(), groupVO.getPageSize());
+    GroupModel groupModel = new GroupModel();
+    groupModel.setId(groupVO.getId());
+    groupModel.setGroupName(groupVO.getGroupName());
+    List<GroupModel> list = groupMapper.getGroupList(groupModel);
+    // 用PageInfo对结果进行包装
+    PageInfo<GroupModel> page = new PageInfo<>(list);
+    return page;
   }
 }

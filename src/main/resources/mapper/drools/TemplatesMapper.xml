@@ -4,13 +4,13 @@
 <mapper namespace="com.yongming.backendpro.project.drools.mapper.TemplatesMapper">
     <resultMap id="templatemap" type="com.yongming.backendpro.project.drools.model.TemplatesModel">
         <id column="id" property="id"/>
-        <result column="templatename" property="title"/>
-        <result column="templatedesc" property="content"/>
-        <result column="quoteentities" property="remind"/>
-        <result column="canchanged" property="remindTime"/>
-        <result column="templatecontent" property="cacleRemind"/>
+        <result column="templatename" property="templateName"/>
+        <result column="templatedesc" property="templateDesc"/>
+        <result column="quoteentities" property="quoteEntities"/>
+        <result column="canchanged" property="canChanged"/>
+        <result column="templatecontent" property="templateContent"/>
         <result column="createtime" property="createTime"/>
-        <result column="quotefunctions" property="userId"/>
+        <result column="quotefunctions" property="quoteFunctions"/>
     </resultMap>
     <sql id="basecolumn">
         id
@@ -23,10 +23,19 @@
         createtime,
         quotefunctions
     </sql>
-    <select id="getTemplateList" resultMap="templatemap">
+    <select id="getTemplateList" parameterType="com.yongming.backendpro.project.drools.model.TemplatesModel"
+            resultMap="templatemap">
         select
         <include refid="basecolumn"/>
         from drools_templates
+        <where>
+            <if test="id != 0">
+                id=#{id}
+            </if>
+            <if test="templateName !=null and templateName != ''">
+                and templatename like concat('%',#{templateName},'%')
+            </if>
+        </where>
     </select>
 
     <select id="getTemplateModel" resultType="com.yongming.backendpro.project.drools.model.TemplatesModel"

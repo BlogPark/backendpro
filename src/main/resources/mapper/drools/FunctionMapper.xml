@@ -106,4 +106,21 @@
         where id = #{id}
     </update>
 
+    <select id="getAllFunctionList" resultMap="functionmap"
+            parameterType="com.yongming.backendpro.project.drools.model.FunctionModel">
+        select
+        <include refid="basecolumn"/>
+        from drools_function
+        <where>
+            <if test="id != 0">
+                id=#{id}
+            </if>
+            <if test="functionName !=null and functionName !='' ">
+                and functionname=#{functionName}
+            </if>
+            <if test="functionDesc !=null and functionDesc !='' ">
+                and functiondesc=#{functionDesc}
+            </if>
+        </where>
+    </select>
 </mapper>

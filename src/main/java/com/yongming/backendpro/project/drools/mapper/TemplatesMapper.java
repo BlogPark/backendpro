@@ -10,7 +10,7 @@ public interface TemplatesMapper {
    *
    * @return
    */
-  List<TemplatesModel> getTemplateList();
+  List<TemplatesModel> getTemplateList(TemplatesModel templatesModel);
 
   /**
    * 查询模板

@@ -36,4 +36,12 @@ public interface FunctionMapper {
    * @return
    */
   int updateFunction(FunctionModel functionModel);
+
+  /**
+   * 查询所有的函数列表
+   *
+   * @param functionModel
+   * @return
+   */
+  List<FunctionModel> getAllFunctionList(FunctionModel functionModel);
 }

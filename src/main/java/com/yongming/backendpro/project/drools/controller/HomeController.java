@@ -2,12 +2,10 @@ package com.yongming.backendpro.project.drools.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.yongming.backendpro.project.drools.droolsmodel.DroolsTestModel;
-import com.yongming.backendpro.project.drools.model.EntityDetailModel;
-import com.yongming.backendpro.project.drools.model.EntityModel;
-import com.yongming.backendpro.project.drools.model.ResultModel;
-import com.yongming.backendpro.project.drools.model.RuleModel;
-import com.yongming.backendpro.project.drools.vo.EntityVO;
-import com.yongming.backendpro.project.drools.vo.RuleVO;
+import com.yongming.backendpro.project.drools.model.*;
+import com.yongming.backendpro.project.drools.service.droolsBusinessService;
+import com.yongming.backendpro.project.drools.service.droolsService;
+import com.yongming.backendpro.project.drools.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,11 +15,9 @@ import java.util.List;
 @RequestMapping("/drools")
 public class HomeController {
 
-  @Autowired
-  private com.yongming.backendpro.project.drools.service.droolsBusinessService
-      droolsBusinessService;
+  @Autowired private droolsBusinessService droolsBusinessService;
 
-  @Autowired private com.yongming.backendpro.project.drools.service.droolsService droolsService;
+  @Autowired private droolsService droolsService;
 
   @GetMapping("/write")
   public ResultModel writeRule() {
@@ -63,6 +59,24 @@ public class HomeController {
   @PostMapping("/rulelist")
   public PageInfo<RuleModel> getRuleList(@RequestBody RuleVO ruleVO) {
     return droolsService.getAllRulesForPage(ruleVO);
+  }
+  // endregion
+  // region 模板信息
+  @PostMapping("/templatelist")
+  public PageInfo<TemplatesModel> getTemplatesList(@RequestBody TemplateVO templateVO) {
+    return droolsService.getTemplateList(templateVO);
+  }
+  // endregion
+  // region 函数信息
+  @PostMapping("/functionlist")
+  public PageInfo<FunctionModel> getFunctionList(@RequestBody FunctionVO functionVO) {
+    return droolsService.getFunctionList(functionVO);
+  }
+  // endregion
+  // region 分组信息
+  @PostMapping("/grouplist")
+  public PageInfo<GroupModel> getGroupList(@RequestBody GroupVO groupVO) {
+    return droolsService.getGroupList(groupVO);
   }
   // endregion
 }

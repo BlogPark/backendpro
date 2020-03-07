@@ -37,5 +37,11 @@ public interface RuleMapper {
    */
   int updateRuleById(RuleModel ruleModel);
 
+  /**
+   * 查询所有的规则列表
+   *
+   * @param ruleModel
+   * @return
+   */
   List<RuleModel> getRuleList(RuleModel ruleModel);
 }

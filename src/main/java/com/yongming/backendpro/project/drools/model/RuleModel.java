@@ -1,5 +1,6 @@
 package com.yongming.backendpro.project.drools.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.util.Date;
@@ -23,5 +24,6 @@ public class RuleModel {
   /** 引用函数集合 */
   private String quoteFunctions;
   /** 创建时间 */
+  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   private Date createTime;
 }
