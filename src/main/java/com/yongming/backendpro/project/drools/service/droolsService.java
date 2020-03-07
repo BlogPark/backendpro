@@ -5,13 +5,13 @@ import com.yongming.backendpro.project.drools.model.EntityDetailModel;
 import com.yongming.backendpro.project.drools.model.EntityModel;
 import com.yongming.backendpro.project.drools.model.RuleModel;
 import com.yongming.backendpro.project.drools.vo.EntityVO;
+import com.yongming.backendpro.project.drools.vo.RuleVO;
 
 import java.util.List;
 
 public interface droolsService {
   // 获取所有规则
-  PageInfo<RuleModel> getAllRulesForPage();
-
+  PageInfo<RuleModel> getAllRulesForPage(RuleVO ruleVO);
   // 获取所有模板
   // 获取所有函数
   // 修改规则

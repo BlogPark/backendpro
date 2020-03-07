@@ -10,6 +10,8 @@ public class RuleModel {
   private int id;
   /** 规则编码 */
   private String ruleCode;
+  /** 规则名称 */
+  private String ruleName;
   /** 规则分组名称 */
   private String ruleGroup;
   /** 模板ID */

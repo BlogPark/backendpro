@@ -5,7 +5,9 @@ import com.yongming.backendpro.project.drools.droolsmodel.DroolsTestModel;
 import com.yongming.backendpro.project.drools.model.EntityDetailModel;
 import com.yongming.backendpro.project.drools.model.EntityModel;
 import com.yongming.backendpro.project.drools.model.ResultModel;
+import com.yongming.backendpro.project.drools.model.RuleModel;
 import com.yongming.backendpro.project.drools.vo.EntityVO;
+import com.yongming.backendpro.project.drools.vo.RuleVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -45,6 +47,7 @@ public class HomeController {
     return resultModel;
   }
 
+  // region 实体信息
   @PostMapping("/entitylist")
   public PageInfo<EntityModel> getEntityList(@RequestBody EntityVO entityVO) {
     return droolsService.getEntityList(entityVO);
@@ -54,4 +57,12 @@ public class HomeController {
   public List<EntityDetailModel> getEntityInfo(@RequestParam("id") String id) {
     return droolsService.getEntityInfo(id);
   }
+  // endregion
+
+  // region 规则信息
+  @PostMapping("/rulelist")
+  public PageInfo<RuleModel> getRuleList(@RequestBody RuleVO ruleVO) {
+    return droolsService.getAllRulesForPage(ruleVO);
+  }
+  // endregion
 }

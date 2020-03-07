@@ -36,4 +36,6 @@ public interface RuleMapper {
    * @return
    */
   int updateRuleById(RuleModel ruleModel);
+
+  List<RuleModel> getRuleList(RuleModel ruleModel);
 }
