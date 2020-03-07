@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50724
 File Encoding         : 65001
 
-Date: 2020-03-06 20:10:39
+Date: 2020-03-07 13:34:55
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -268,37 +268,6 @@ INSERT INTO `pinboard` VALUES ('1', 'HTML5 文档类型', 'Bootstrap 使用到�
 INSERT INTO `pinboard` VALUES ('2', 'Normalize.css', '为了增强跨浏览器表现的一致性，我们使用了 Normalize.css，这是由 Nicolas Gallagher 和 Jonathan Neal 维护的一个CSS 重置样式库。', '1', null, null, '2020-02-09 22:46:15', '1', '管理员', '1');
 
 -- ----------------------------
--- Table structure for systemmenu
--- ----------------------------
-DROP TABLE IF EXISTS `systemmenu`;
-CREATE TABLE `systemmenu` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键自增',
-  `fatherid` int(11) DEFAULT NULL COMMENT '父级ID',
-  `menuname` varchar(255) DEFAULT NULL COMMENT '菜单名称',
-  `menutype` int(11) DEFAULT NULL COMMENT '菜单类型(1 菜单 2  按钮)',
-  `menucontrollers` varchar(1000) DEFAULT NULL COMMENT '菜单控制器',
-  `menurouter` varchar(255) DEFAULT NULL COMMENT '菜单路由',
-  `menuicon` varchar(255) DEFAULT NULL COMMENT '菜单徽标',
-  `menustatus` int(11) DEFAULT NULL COMMENT '菜单状态(1 正常 2 删除)',
-  `createtime` datetime DEFAULT NULL COMMENT '创建时间',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4;
-
--- ----------------------------
--- Records of systemmenu
--- ----------------------------
-INSERT INTO `systemmenu` VALUES ('1', '0', '导航一', '1', null, null, 'el-icon-s-operation', '1', '2020-02-01 14:43:21');
-INSERT INTO `systemmenu` VALUES ('2', '0', '导航二', '1', null, null, 'el-icon-s-grid', '1', '2020-02-01 14:43:48');
-INSERT INTO `systemmenu` VALUES ('3', '0', '导航三', '1', null, null, 'el-icon-s-marketing', '1', '2020-02-01 14:44:15');
-INSERT INTO `systemmenu` VALUES ('4', '1', '子导航一', '1', '', '/order', '', '1', '2020-02-01 14:43:21');
-INSERT INTO `systemmenu` VALUES ('5', '2', '子导航二', '1', '', '/orderdetail', '', '1', '2020-02-01 14:43:48');
-INSERT INTO `systemmenu` VALUES ('6', '3', '子导航三', '1', '', '/pinboard', '', '1', '2020-02-01 14:44:15');
-INSERT INTO `systemmenu` VALUES ('7', '0', '编辑器测试', '1', null, null, 'el-icon-s-management', '1', '2020-02-27 14:41:36');
-INSERT INTO `systemmenu` VALUES ('8', '7', 'tinymce编辑器', '1', null, '/editor', 'el-icon-s-management', '1', '2020-02-27 14:42:22');
-INSERT INTO `systemmenu` VALUES ('9', '0', 'drools规则引擎', '1', null, null, 'el-icon-s-order', '1', '2020-03-04 14:32:50');
-INSERT INTO `systemmenu` VALUES ('10', '9', '实体列表', '1', null, '/drools/entity', null, '1', '2020-03-04 14:33:43');
-
--- ----------------------------
 -- Table structure for sys_config
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_config`;
@@ -508,12 +477,17 @@ CREATE TABLE `sys_logininfor` (
   `msg` varchar(255) DEFAULT '' COMMENT '提示消息',
   `login_time` datetime DEFAULT NULL COMMENT '访问时间',
   PRIMARY KEY (`info_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COMMENT='系统访问记录';
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COMMENT='系统访问记录';
 
 -- ----------------------------
 -- Records of sys_logininfor
 -- ----------------------------
 INSERT INTO `sys_logininfor` VALUES ('1', 'admin', '127.0.0.1', '内网IP', 'Firefox 7', 'Windows 10', '0', '登录成功', '2020-03-06 17:23:22');
+INSERT INTO `sys_logininfor` VALUES ('2', 'admin', '127.0.0.1', '内网IP', 'Firefox 7', 'Windows 10', '1', '验证码已失效', '2020-03-06 20:37:37');
+INSERT INTO `sys_logininfor` VALUES ('3', 'admin', '127.0.0.1', '内网IP', 'Firefox 7', 'Windows 10', '0', '登录成功', '2020-03-06 20:37:37');
+INSERT INTO `sys_logininfor` VALUES ('4', 'admin', '127.0.0.1', '内网IP', 'Firefox 7', 'Windows 10', '0', '登录成功', '2020-03-06 22:04:36');
+INSERT INTO `sys_logininfor` VALUES ('5', 'admin', '127.0.0.1', '内网IP', 'Firefox 7', 'Windows 10', '1', '验证码错误', '2020-03-07 13:23:55');
+INSERT INTO `sys_logininfor` VALUES ('6', 'admin', '127.0.0.1', '内网IP', 'Firefox 7', 'Windows 10', '0', '登录成功', '2020-03-07 13:24:09');
 
 -- ----------------------------
 -- Table structure for sys_menu
@@ -545,7 +519,8 @@ CREATE TABLE `sys_menu` (
 INSERT INTO `sys_menu` VALUES ('1', '系统管理', '0', '1', 'system', null, '1', 'M', '0', '', 'system', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '系统管理目录');
 INSERT INTO `sys_menu` VALUES ('2', '系统监控', '0', '2', 'monitor', null, '1', 'M', '0', '', 'monitor', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '系统监控目录');
 INSERT INTO `sys_menu` VALUES ('3', '系统工具', '0', '3', 'tool', null, '1', 'M', '0', '', 'tool', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '系统工具目录');
-INSERT INTO `sys_menu` VALUES ('4', '若依官网', '0', '4', 'http://ruoyi.vip', null, '0', 'M', '0', '', 'guide', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '若依官网地址');
+INSERT INTO `sys_menu` VALUES ('4', '规则引擎', '0', '4', 'drools', '', '1', 'M', '0', '', 'bug', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '规则引擎配置');
+INSERT INTO `sys_menu` VALUES ('5', '外链', '0', '5', 'https://www.baidu.com', null, '0', 'M', '0', '', 'guide', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '若依官网地址');
 INSERT INTO `sys_menu` VALUES ('100', '用户管理', '1', '1', 'user', 'system/user/index', '1', 'C', '0', 'system:user:list', 'user', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '用户管理菜单');
 INSERT INTO `sys_menu` VALUES ('101', '角色管理', '1', '2', 'role', 'system/role/index', '1', 'C', '0', 'system:role:list', 'peoples', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '角色管理菜单');
 INSERT INTO `sys_menu` VALUES ('102', '菜单管理', '1', '3', 'menu', 'system/menu/index', '1', 'C', '0', 'system:menu:list', 'tree-table', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '菜单管理菜单');
@@ -562,6 +537,8 @@ INSERT INTO `sys_menu` VALUES ('112', '服务监控', '2', '4', 'server', 'monit
 INSERT INTO `sys_menu` VALUES ('113', '表单构建', '3', '1', 'build', 'tool/build/index', '1', 'C', '0', 'tool:build:list', 'build', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '表单构建菜单');
 INSERT INTO `sys_menu` VALUES ('114', '代码生成', '3', '2', 'gen', 'tool/gen/index', '1', 'C', '0', 'tool:gen:list', 'code', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '代码生成菜单');
 INSERT INTO `sys_menu` VALUES ('115', '系统接口', '3', '3', 'swagger', 'tool/swagger/index', '1', 'C', '0', 'tool:swagger:list', 'swagger', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '系统接口菜单');
+INSERT INTO `sys_menu` VALUES ('304', 'ICON', '3', '4', 'icon', 'components/icons/index', '1', 'M', '0', null, 'icon', 'admin', '2020-03-06 21:06:52', 'admin', '2020-03-06 21:07:01', '系统ICON标记目录');
+INSERT INTO `sys_menu` VALUES ('401', '实体管理', '4', '1', 'entitylist', 'drools/entitylist', '1', 'C', '0', '', 'druid', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '用户管理菜单');
 INSERT INTO `sys_menu` VALUES ('500', '操作日志', '108', '1', 'operlog', 'monitor/operlog/index', '1', 'C', '0', 'monitor:operlog:list', 'form', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '操作日志菜单');
 INSERT INTO `sys_menu` VALUES ('501', '登录日志', '108', '2', 'logininfor', 'monitor/logininfor/index', '1', 'C', '0', 'monitor:logininfor:list', 'logininfor', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '登录日志菜单');
 INSERT INTO `sys_menu` VALUES ('1001', '用户查询', '100', '1', '', '', '1', 'F', '0', 'system:user:query', '#', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '');
