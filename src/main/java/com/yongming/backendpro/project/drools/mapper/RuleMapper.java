@@ -44,4 +44,5 @@ public interface RuleMapper {
    * @return
    */
   List<RuleModel> getRuleList(RuleModel ruleModel);
+
 }

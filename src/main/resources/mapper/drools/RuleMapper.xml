@@ -72,17 +72,26 @@
 
     <update id="updateRuleById" parameterType="com.yongming.backendpro.project.drools.model.RuleModel">
         update drools_rules
-        set rulecode=#{ruleCode}
-                ,
-            rulegroup=#{ruleGroup}
-                ,
-            templateid=#{templateId}
-                ,
-            rulecontent=#{ruleContent}
-                ,
-            quoteentities=#{quoteEntities}
-                ,
-            quotefunctions#{quoteFunctions}
+        <set>
+            <if test="ruleCode != null and ruleCode!='' ">
+                rulecode=#{ruleCode},
+            </if>
+            <if test="ruleGroup !=null and ruleGroup!=''">
+                rulegroup=#{ruleGroup},
+            </if>
+            <if test="templateId!=0">
+                templateid=#{templateId},
+            </if>
+            <if test="ruleContent!=null and ruleContent!=''">
+                rulecontent=#{ruleContent},
+            </if>
+            <if test="quoteEntities!=null and quoteEntities!=''">
+                quoteentities=#{quoteEntities},
+            </if>
+            <if test="quoteFunctions !=null and quoteFunctions!=''">
+                quotefunctions#{quoteFunctions}
+            </if>
+        </set>
         where id = #{id}
     </update>
 
