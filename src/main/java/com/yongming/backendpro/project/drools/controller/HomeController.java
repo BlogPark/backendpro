@@ -1,6 +1,7 @@
 package com.yongming.backendpro.project.drools.controller;
 
 import com.github.pagehelper.PageInfo;
+import com.yongming.backendpro.framework.web.domain.AjaxResult;
 import com.yongming.backendpro.project.drools.droolsmodel.DroolsTestModel;
 import com.yongming.backendpro.project.drools.model.*;
 import com.yongming.backendpro.project.drools.service.droolsBusinessService;
@@ -77,6 +78,29 @@ public class HomeController {
   @PostMapping("/grouplist")
   public PageInfo<GroupModel> getGroupList(@RequestBody GroupVO groupVO) {
     return droolsService.getGroupList(groupVO);
+  }
+
+  @GetMapping("/getsinglegroup")
+  public GroupModel getSingleGroup(@RequestParam("id") String id) {
+    return droolsService.getSingleGroup(id);
+  }
+
+  @PostMapping("/addgroup")
+  public AjaxResult addNewGroup(@RequestBody GroupModel groupModel) {
+    if (droolsService.addNewGroup(groupModel) > 0) {
+      return AjaxResult.success("success");
+    } else {
+      return AjaxResult.error("添加失败");
+    }
+  }
+
+  @PostMapping("/updategroup")
+  public AjaxResult updateGroup(@RequestBody GroupModel groupModel) {
+    if (droolsService.editGroup(groupModel) > 0) {
+      return AjaxResult.success("success");
+    } else {
+      return AjaxResult.error("更新失败");
+    }
   }
   // endregion
 }

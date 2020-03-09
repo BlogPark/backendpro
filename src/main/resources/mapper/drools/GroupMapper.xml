@@ -44,25 +44,24 @@
         insert into drools_group(groupname,
                                  groupdesc,
                                  grouptype,
-                                 createtime
-        )
-        value
-        (
-        #{groupName}
-        ,
-        #{groupDesc}
-        ,
-        #{groupType}
-        ,
-        #{createTime}
+                                 createtime)
+            value
+            (
+            #{groupName}
+            ,
+            #{groupDesc}
+            ,
+            #{groupType}
+            ,
+            #{createTime}
         )
     </insert>
 
     <update id="updateGroup" parameterType="com.yongming.backendpro.project.drools.model.GroupModel">
         update drools_group
-        set pinstatus=#{groupName}
+        set groupname=#{groupName}
                 ,
-            groupname=#{groupDesc}
+            groupdesc=#{groupDesc}
                 ,
             grouptype=#{groupType}
         where id = #{id}
