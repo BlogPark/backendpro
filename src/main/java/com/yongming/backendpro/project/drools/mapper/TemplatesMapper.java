@@ -17,7 +17,7 @@ public interface TemplatesMapper {
    *
    * @return
    */
-  TemplatesModel getTemplateModel();
+  TemplatesModel getTemplateModel(String id);
 
   /**
    * 添加模板

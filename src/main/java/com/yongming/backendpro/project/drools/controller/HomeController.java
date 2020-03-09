@@ -67,6 +67,21 @@ public class HomeController {
   public PageInfo<TemplatesModel> getTemplatesList(@RequestBody TemplateVO templateVO) {
     return droolsService.getTemplateList(templateVO);
   }
+
+  @GetMapping("/gettemplate")
+  public TemplateResponseVO getSingleTemplate(@RequestParam("id") String id) {
+    return droolsService.getSingleTemplate(id);
+  }
+
+  @PostMapping("/addtemplate")
+  public int addTemplate(@RequestBody TemplatesModel templatesModel) {
+    return droolsService.addNewTemplate(templatesModel);
+  }
+
+  @PostMapping("/updatetemplate")
+  public int updateTemplate(@RequestBody TemplatesModel templatesModel) {
+    return droolsService.editTemplate(templatesModel);
+  }
   // endregion
   // region 函数信息
   @PostMapping("/functionlist")

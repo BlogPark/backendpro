@@ -39,11 +39,11 @@
     </select>
 
     <select id="getTemplateModel" resultType="com.yongming.backendpro.project.drools.model.TemplatesModel"
-            parameterType="int">
+            parameterType="string">
         select
         <include refid="basecolumn"/>
         from drools_templates
-        where id-=#{id}
+        where id=#{id}
     </select>
 
     <insert id="addNewTemplate">

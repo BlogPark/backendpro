@@ -6,9 +6,12 @@ import com.yongming.backendpro.project.drools.mapper.*;
 import com.yongming.backendpro.project.drools.model.*;
 import com.yongming.backendpro.project.drools.service.droolsService;
 import com.yongming.backendpro.project.drools.vo.*;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -67,8 +70,33 @@ public class droolsServiceImpl implements droolsService {
 
   @Override
   public int addNewTemplate(TemplatesModel templatesModel) {
+    templatesModel.setCreateTime(new Date());
     int rowCount = templatesMapper.addNewTemplate(templatesModel);
     return rowCount;
+  }
+
+  @Override
+  public TemplateResponseVO getSingleTemplate(String id) {
+    TemplateResponseVO templateResponseVO = new TemplateResponseVO();
+    TemplatesModel templatesModel = templatesMapper.getTemplateModel(id);
+    List<FunctionModel> functionModelList = new ArrayList<>();
+    List<EntityModel> entityModelList = new ArrayList<>();
+    if (templatesModel != null) {
+      if (!StringUtils.isBlank(templatesModel.getQuoteFunctions())) {
+        functionModelList =
+            functionMapper.getFunctionByIds(
+                Arrays.asList(templatesModel.getQuoteFunctions().split(",")));
+      }
+      if (!StringUtils.isBlank(templatesModel.getQuoteEntities())) {
+        entityModelList =
+            entityMapper.getEntityListByIds(
+                Arrays.asList(templatesModel.getQuoteEntities().split(",")));
+      }
+    }
+    templateResponseVO.setEntityModelList(entityModelList);
+    templateResponseVO.setFunctionModelList(functionModelList);
+    templateResponseVO.setTemplatesModel(templatesModel);
+    return null;
   }
 
   @Override

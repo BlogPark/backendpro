@@ -19,6 +19,8 @@ public interface droolsService {
   int editTemplate(TemplatesModel templatesModel);
   // 添加模板
   int addNewTemplate(TemplatesModel templatesModel);
+  // 查询单个模板信息
+  TemplateResponseVO getSingleTemplate(String id);
   // 获取所有函数
   PageInfo<FunctionModel> getFunctionList(FunctionVO functionVO);
   // 修改函数
