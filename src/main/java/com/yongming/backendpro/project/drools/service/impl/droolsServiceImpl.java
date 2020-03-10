@@ -96,7 +96,7 @@ public class droolsServiceImpl implements droolsService {
     templateResponseVO.setEntityModelList(entityModelList);
     templateResponseVO.setFunctionModelList(functionModelList);
     templateResponseVO.setTemplatesModel(templatesModel);
-    return null;
+    return templateResponseVO;
   }
 
   @Override
