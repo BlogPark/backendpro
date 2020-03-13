@@ -125,6 +125,18 @@ public class droolsServiceImpl implements droolsService {
   }
 
   @Override
+  public FunctionModel getSingleFunction(String id) {
+    FunctionModel functionModel = functionMapper.getFunctionByID(Integer.valueOf(id));
+    return functionModel;
+  }
+
+  @Override
+  public List<FunctionModel> getFunctionByIds(CommonRequestVO commonRequestVO) {
+    List<FunctionModel> functionList = functionMapper.getFunctionByIds(commonRequestVO.getIdList());
+    return functionList;
+  }
+
+  @Override
   public PageInfo<EntityModel> getEntityList(EntityVO entityVO) {
     PageHelper.startPage(entityVO.getPageIndex(), entityVO.getPageSize());
     EntityModel entityModel = new EntityModel();
@@ -136,6 +148,18 @@ public class droolsServiceImpl implements droolsService {
     // 用PageInfo对结果进行包装
     PageInfo<EntityModel> page = new PageInfo<EntityModel>(list);
     return page;
+  }
+
+  @Override
+  public EntityModel getSingleEntity(String id) {
+    EntityModel entityModele = entityMapper.getSingleEntityByID(Integer.valueOf(id));
+    return entityModele;
+  }
+
+  @Override
+  public List<EntityModel> getEntitiesByIds(CommonRequestVO commonRequestVO) {
+    List<EntityModel> entitiesList = entityMapper.getEntityListByIds(commonRequestVO.getIdList());
+    return entitiesList;
   }
 
   @Override
@@ -172,5 +196,20 @@ public class droolsServiceImpl implements droolsService {
   public int editGroup(GroupModel groupModel) {
     int rowCount = groupMapper.updateGroup(groupModel);
     return rowCount;
+  }
+
+  @Override
+  public PageInfo<CommonResponseVO> getList(CommonRequestVO commonRequestVO) {
+    PageHelper.startPage(commonRequestVO.getPageIndex(), commonRequestVO.getPageSize());
+    List<CommonResponseVO> list = null;
+    if (commonRequestVO.getType() == 2) {
+      // 查询实体信息
+      list = entityMapper.getAllentity();
+    } else if (commonRequestVO.getType() == 1) {
+      // 查询函数信息
+      list = functionMapper.getFunctionList();
+    }
+    PageInfo<CommonResponseVO> page = new PageInfo<>(list);
+    return page;
   }
 }

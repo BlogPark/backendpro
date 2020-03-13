@@ -49,10 +49,20 @@ public class HomeController {
   public PageInfo<EntityModel> getEntityList(@RequestBody EntityVO entityVO) {
     return droolsService.getEntityList(entityVO);
   }
-
+  // 查询实体下详细字段信息
   @GetMapping("/entityinfo")
   public List<EntityDetailModel> getEntityInfo(@RequestParam("id") String id) {
     return droolsService.getEntityInfo(id);
+  }
+  // 查询单个实体信息
+  @GetMapping("/getentity")
+  public EntityModel getsingleEntity(@RequestParam("id") String id) {
+    return droolsService.getSingleEntity(id);
+  }
+  // 按照ids查询实体列表
+  @PostMapping("/getentitisbyids")
+  public List<EntityModel> getEntityByIds(@RequestBody CommonRequestVO commonRequestVO) {
+    return droolsService.getEntitiesByIds(commonRequestVO);
   }
   // endregion
 
@@ -88,6 +98,16 @@ public class HomeController {
   public PageInfo<FunctionModel> getFunctionList(@RequestBody FunctionVO functionVO) {
     return droolsService.getFunctionList(functionVO);
   }
+  // 查询单个函数信息
+  @GetMapping("/getfunction")
+  public FunctionModel getSingleFunction(@RequestParam("id") String id) {
+    return droolsService.getSingleFunction(id);
+  }
+
+  @PostMapping("/getfunctionids")
+  public List<FunctionModel> getFunctionListByIds(@RequestBody CommonRequestVO commonRequestVO) {
+    return droolsService.getFunctionByIds(commonRequestVO);
+  }
   // endregion
   // region 分组信息
   @PostMapping("/grouplist")
@@ -118,4 +138,9 @@ public class HomeController {
     }
   }
   // endregion
+
+  @PostMapping("/getquotelist")
+  private PageInfo<CommonResponseVO> getListData(@RequestBody CommonRequestVO commonRequestVO) {
+    return droolsService.getList(commonRequestVO);
+  }
 }

@@ -27,10 +27,18 @@ public interface droolsService {
   int editFunction(FunctionModel functionModel);
   // 添加函数
   int addNewFunction(FunctionModel functionModel);
+  // 查询单个函数信息
+  FunctionModel getSingleFunction(String id);
+  // 根据IDS查询函数列表
+  List<FunctionModel> getFunctionByIds(CommonRequestVO commonRequestVO);
   // 提交实体变更申请
   // 查询所有实体变更申请
   // 获取所有实体列表
   PageInfo<EntityModel> getEntityList(EntityVO entityVO);
+  // 查询单个实体信息
+  EntityModel getSingleEntity(String id);
+  // 根据IDS查询实体集
+  List<EntityModel> getEntitiesByIds(CommonRequestVO commonRequestVO);
   // 按照实体ID查询实体信息
   List<EntityDetailModel> getEntityInfo(String id);
   // 获取所有分组信息
@@ -41,4 +49,6 @@ public interface droolsService {
   GroupModel getSingleGroup(String id);
   // 修改分组信息
   int editGroup(GroupModel groupModel);
+  // 查询实体或者函数列表
+  PageInfo<CommonResponseVO> getList(CommonRequestVO commonRequestVO);
 }

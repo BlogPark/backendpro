@@ -15,6 +15,11 @@
         <result column="groupname" property="groupName"/>
         <result column="createtime" property="createTime"/>
     </resultMap>
+    <resultMap id="commonmap" type="com.yongming.backendpro.project.drools.vo.CommonResponseVO">
+        <id column="id" property="id"/>
+        <result column="functionname" property="name"/>
+        <result column="functiondesc" property="desc"/>
+    </resultMap>
     <sql id="basecolumn">
         id
         ,
@@ -122,5 +127,12 @@
                 and functiondesc=#{functionDesc}
             </if>
         </where>
+    </select>
+    <select id="getFunctionList" resultMap="commonmap">
+        select
+            id,
+            functionname,
+            functiondesc
+        from drools_function
     </select>
 </mapper>

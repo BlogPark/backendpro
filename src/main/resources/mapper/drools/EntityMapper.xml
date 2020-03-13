@@ -12,6 +12,11 @@
         <result column="groupname" property="groupName"/>
         <result column="createTime" property="createTime"/>
     </resultMap>
+    <resultMap id="commonmap" type="com.yongming.backendpro.project.drools.vo.CommonResponseVO">
+        <id column="id" property="id"/>
+        <result column="entityname" property="name"/>
+        <result column="entitydesc" property="desc"/>
+    </resultMap>
     <sql id="basecolumn">
         id
         ,
@@ -98,5 +103,12 @@
                 and groupname=#{groupName}
             </if>
         </where>
+    </select>
+    <select id="getAllentity" resultMap="commonmap">
+        select
+            id,
+            entityname,
+            entitydesc
+        from drools_entity
     </select>
 </mapper>

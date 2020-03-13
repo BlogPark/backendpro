@@ -1,6 +1,7 @@
 package com.yongming.backendpro.project.drools.mapper;
 
 import com.yongming.backendpro.project.drools.model.FunctionModel;
+import com.yongming.backendpro.project.drools.vo.CommonResponseVO;
 
 import java.util.List;
 
@@ -44,4 +45,6 @@ public interface FunctionMapper {
    * @return
    */
   List<FunctionModel> getAllFunctionList(FunctionModel functionModel);
+
+  List<CommonResponseVO> getFunctionList();
 }
