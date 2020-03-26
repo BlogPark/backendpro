@@ -100,6 +100,12 @@ public class droolsServiceImpl implements droolsService {
   }
 
   @Override
+  public List<TemplatesModel> getTemplateForSelect() {
+    List<TemplatesModel> list = templatesMapper.selectTemplateList();
+    return list;
+  }
+
+  @Override
   public PageInfo<FunctionModel> getFunctionList(FunctionVO functionVO) {
     PageHelper.startPage(functionVO.getPageIndex(), functionVO.getPageSize());
     FunctionModel functionModel = new FunctionModel();
@@ -120,6 +126,7 @@ public class droolsServiceImpl implements droolsService {
 
   @Override
   public int addNewFunction(FunctionModel functionModel) {
+    functionModel.setCreateTime(new Date());
     int rowCount = functionMapper.addNewdata(functionModel);
     return rowCount;
   }
@@ -134,6 +141,17 @@ public class droolsServiceImpl implements droolsService {
   public List<FunctionModel> getFunctionByIds(CommonRequestVO commonRequestVO) {
     List<FunctionModel> functionList = functionMapper.getFunctionByIds(commonRequestVO.getIdList());
     return functionList;
+  }
+
+  @Override
+  public FunctionResponVO getFunctionById(String id) {
+    FunctionModel functionModel = functionMapper.getFunctionByID(Integer.valueOf(id));
+    List<String> entitsIds = Arrays.asList(functionModel.getQuoteEntities().split(","));
+    List<EntityModel> entityModelList = entityMapper.getEntityListByIds(entitsIds);
+    FunctionResponVO functionResponVO = new FunctionResponVO();
+    functionResponVO.setQuoteEntities(entityModelList);
+    functionResponVO.setFunctionModel(functionModel);
+    return functionResponVO;
   }
 
   @Override
@@ -196,6 +214,11 @@ public class droolsServiceImpl implements droolsService {
   public int editGroup(GroupModel groupModel) {
     int rowCount = groupMapper.updateGroup(groupModel);
     return rowCount;
+  }
+
+  @Override
+  public List<GroupModel> getGroupListForSelect() {
+    return groupMapper.getGroupListForSelect();
   }
 
   @Override

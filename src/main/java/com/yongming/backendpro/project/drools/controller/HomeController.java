@@ -92,6 +92,11 @@ public class HomeController {
   public int updateTemplate(@RequestBody TemplatesModel templatesModel) {
     return droolsService.editTemplate(templatesModel);
   }
+
+  @GetMapping("/gettemplatelist")
+  public List<TemplatesModel> getSelectTemplates() {
+    return droolsService.getTemplateForSelect();
+  }
   // endregion
   // region 函数信息
   @PostMapping("/functionlist")
@@ -103,10 +108,33 @@ public class HomeController {
   public FunctionModel getSingleFunction(@RequestParam("id") String id) {
     return droolsService.getSingleFunction(id);
   }
-
+  // 查询所有函数
   @PostMapping("/getfunctionids")
   public List<FunctionModel> getFunctionListByIds(@RequestBody CommonRequestVO commonRequestVO) {
     return droolsService.getFunctionByIds(commonRequestVO);
+  }
+  // 添加函数信息
+  @PostMapping("/addfunction")
+  public AjaxResult addNewFunction(@RequestBody FunctionModel functionModel) {
+    if (droolsService.addNewFunction(functionModel) > 0) {
+      return AjaxResult.success("success");
+    } else {
+      return AjaxResult.error("添加失败！");
+    }
+  }
+  // 编辑函数信息
+  @PostMapping("/editfunction")
+  public AjaxResult editFunction(@RequestBody FunctionModel functionModel) {
+    if (droolsService.editFunction(functionModel) > 0) {
+      return AjaxResult.success("success");
+    } else {
+      return AjaxResult.error("编辑失败");
+    }
+  }
+
+  @GetMapping("/getsinglefunction")
+  public FunctionResponVO getFunction(@RequestParam("id") String id) {
+    return droolsService.getFunctionById(id);
   }
   // endregion
   // region 分组信息
@@ -136,6 +164,11 @@ public class HomeController {
     } else {
       return AjaxResult.error("更新失败");
     }
+  }
+
+  @GetMapping("/selectgrouplist")
+  public List<GroupModel> selectGroupList() {
+    return droolsService.getGroupListForSelect();
   }
   // endregion
 

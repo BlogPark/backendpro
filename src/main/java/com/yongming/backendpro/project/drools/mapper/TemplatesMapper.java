@@ -34,4 +34,6 @@ public interface TemplatesMapper {
    * @return
    */
   int updateTemplate(TemplatesModel templatesModel);
+
+  List<TemplatesModel> selectTemplateList();
 }

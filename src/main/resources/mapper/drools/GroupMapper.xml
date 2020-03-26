@@ -44,16 +44,17 @@
         insert into drools_group(groupname,
                                  groupdesc,
                                  grouptype,
-                                 createtime)
-            value
-            (
-            #{groupName}
-            ,
-            #{groupDesc}
-            ,
-            #{groupType}
-            ,
-            #{createTime}
+                                 createtime
+        )
+        value
+        (
+        #{groupName}
+        ,
+        #{groupDesc}
+        ,
+        #{groupType}
+        ,
+        #{createTime}
         )
     </insert>
 
@@ -66,5 +67,11 @@
             grouptype=#{groupType}
         where id = #{id}
     </update>
+
+    <select id="getGroupListForSelect" resultMap="groupmap">
+        select
+        <include refid="basecolumn"/>
+        from drools_group
+    </select>
 
 </mapper>

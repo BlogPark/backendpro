@@ -21,6 +21,8 @@ public interface droolsService {
   int addNewTemplate(TemplatesModel templatesModel);
   // 查询单个模板信息
   TemplateResponseVO getSingleTemplate(String id);
+  // 查询模板列表
+  List<TemplatesModel> getTemplateForSelect();
   // 获取所有函数
   PageInfo<FunctionModel> getFunctionList(FunctionVO functionVO);
   // 修改函数
@@ -31,6 +33,8 @@ public interface droolsService {
   FunctionModel getSingleFunction(String id);
   // 根据IDS查询函数列表
   List<FunctionModel> getFunctionByIds(CommonRequestVO commonRequestVO);
+  // 查询单个函数的信息
+  FunctionResponVO getFunctionById(String id);
   // 提交实体变更申请
   // 查询所有实体变更申请
   // 获取所有实体列表
@@ -49,6 +53,8 @@ public interface droolsService {
   GroupModel getSingleGroup(String id);
   // 修改分组信息
   int editGroup(GroupModel groupModel);
+  // 为下拉框准备分组信息
+  List<GroupModel> getGroupListForSelect();
   // 查询实体或者函数列表
   PageInfo<CommonResponseVO> getList(CommonRequestVO commonRequestVO);
 }

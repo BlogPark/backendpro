@@ -53,23 +53,22 @@
                                      canchanged,
                                      templatecontent,
                                      createtime,
-                                     quotefunctions
-        )
-        value
-        (
-        #{templateName}
-        ,
-        #{templateDesc}
-        ,
-        #{quoteEntities}
-        ,
-        #{canChanged}
-        ,
-        #{templateContent}
-        ,
-        #{createTime}
-        ,
-        #{quoteFunctions}
+                                     quotefunctions)
+            value
+            (
+            #{templateName}
+            ,
+            #{templateDesc}
+            ,
+            #{quoteEntities}
+            ,
+            #{canChanged}
+            ,
+            #{templateContent}
+            ,
+            #{createTime}
+            ,
+            #{quoteFunctions}
         )
     </insert>
 
@@ -89,4 +88,9 @@
         where id = #{id}
     </update>
 
+    <select id="selectTemplateList" resultMap="templatemap">
+        select
+        <include refid="basecolumn"/>
+        from drools_templates
+    </select>
 </mapper>

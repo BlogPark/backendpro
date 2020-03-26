@@ -34,4 +34,6 @@ public interface GroupMapper {
    * @return
    */
   int updateGroup(GroupModel groupModel);
+
+  List<GroupModel> getGroupListForSelect();
 }
