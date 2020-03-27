@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50724
 File Encoding         : 65001
 
-Date: 2020-03-08 18:06:48
+Date: 2020-03-27 13:59:46
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -78,12 +78,15 @@ CREATE TABLE `drools_function` (
   `groupname` varchar(255) DEFAULT NULL COMMENT '分组名称',
   `createtime` datetime DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COMMENT='函数表';
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COMMENT='函数表';
 
 -- ----------------------------
 -- Records of drools_function
 -- ----------------------------
 INSERT INTO `drools_function` VALUES ('1', 'testfunction', '测试函数', 'asdasd', '1', 'String', '描述', '使用示例', '1', '分组名称', '2020-03-07 20:56:00');
+INSERT INTO `drools_function` VALUES ('2', 'aafunction', '计算函数', 'g该回家看了', '1', 'String', '描述', '使用示例', '1', '默认分组', '2020-03-10 16:14:29');
+INSERT INTO `drools_function` VALUES ('3', '测试函数', '测试函数', 'function int returnage(){&return 10;&}', '1', '数值', null, null, '0', null, null);
+INSERT INTO `drools_function` VALUES ('4', '测试函数2', '测试函数', 'function String returnname(){&   return \"张三\";&}', '1', 'String', '没有参数，没有参数', '$name:returnname()', '0', '错误分组', '2020-03-26 13:54:24');
 
 -- ----------------------------
 -- Table structure for drools_group
@@ -93,15 +96,18 @@ CREATE TABLE `drools_group` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键自增',
   `groupname` varchar(255) DEFAULT NULL COMMENT '分组名称',
   `groupdesc` varchar(255) DEFAULT NULL COMMENT '分组描述',
-  `grouptype` int(11) DEFAULT NULL COMMENT '分组类型',
+  `grouptype` varchar(20) DEFAULT NULL COMMENT '分组类型',
   `createtime` datetime DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COMMENT='分组信息表';
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COMMENT='分组信息表';
 
 -- ----------------------------
 -- Records of drools_group
 -- ----------------------------
-INSERT INTO `drools_group` VALUES ('1', '默认分组', '默认分组', '1', '2020-03-07 20:56:36');
+INSERT INTO `drools_group` VALUES ('1', '默认分组', '默认分组', '初审规则', '2020-03-07 20:56:36');
+INSERT INTO `drools_group` VALUES ('2', '错误分组', '错误分组', '终审规则', '2020-03-09 19:12:28');
+INSERT INTO `drools_group` VALUES ('3', '测试分组', '测试分组', '初审规则', '2020-03-09 19:12:31');
+INSERT INTO `drools_group` VALUES ('4', '的', '是', '初审规则', '2020-03-09 19:23:18');
 
 -- ----------------------------
 -- Table structure for drools_product
@@ -178,12 +184,13 @@ CREATE TABLE `drools_templates` (
   `quotefunctions` varchar(255) DEFAULT NULL COMMENT '引用函数',
   `createtime` datetime DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COMMENT='模板信息表';
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COMMENT='模板信息表';
 
 -- ----------------------------
 -- Records of drools_templates
 -- ----------------------------
-INSERT INTO `drools_templates` VALUES ('1', '测试模板', '测试模板', '1', '0', '速度非常', '1', '2020-03-07 21:04:51');
+INSERT INTO `drools_templates` VALUES ('1', '测试模板', '测试模板', '1', '1', '速度非常', '1,2', '2020-03-07 21:04:51');
+INSERT INTO `drools_templates` VALUES ('2', '神地方', '神地方', '1', '1', 'import com.yongming.backendpro.drools.model.Person&import com.yongming.backendpro.drools.model.Class', '1', '2020-03-12 23:11:32');
 
 -- ----------------------------
 -- Table structure for gen_table
@@ -352,7 +359,7 @@ CREATE TABLE `sys_dict_data` (
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   `remark` varchar(500) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`dict_code`)
-) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4 COMMENT='字典数据表';
+) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8mb4 COMMENT='字典数据表';
 
 -- ----------------------------
 -- Records of sys_dict_data
@@ -385,6 +392,12 @@ INSERT INTO `sys_dict_data` VALUES ('25', '8', '生成代码', '8', 'sys_oper_ty
 INSERT INTO `sys_dict_data` VALUES ('26', '9', '清空数据', '9', 'sys_oper_type', '', 'danger', 'N', '0', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '清空操作');
 INSERT INTO `sys_dict_data` VALUES ('27', '1', '成功', '0', 'sys_common_status', '', 'primary', 'N', '0', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '正常状态');
 INSERT INTO `sys_dict_data` VALUES ('28', '2', '失败', '1', 'sys_common_status', '', 'danger', 'N', '0', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '停用状态');
+INSERT INTO `sys_dict_data` VALUES ('29', '1', '初审规则', '1', 'drools_group_type', '', 'primary', 'Y', '0', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '规则引擎分组类型');
+INSERT INTO `sys_dict_data` VALUES ('30', '2', '终审规则', '2', 'drools_group_type', '', 'primary', 'Y', '0', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '规则引擎分组类型');
+INSERT INTO `sys_dict_data` VALUES ('31', '1', '字符串', 'String', 'function_return', null, null, 'Y', '0', 'admin', '2020-03-23 21:25:47', 'ry', '2020-03-23 21:26:10', '函数返回值类型');
+INSERT INTO `sys_dict_data` VALUES ('32', '2', '数值', 'int', 'function_return', null, null, 'N', '0', 'admin', '2020-03-23 21:27:16', 'ry', '2020-03-23 21:27:25', '函数返回值类型');
+INSERT INTO `sys_dict_data` VALUES ('33', '3', '布尔值', 'Boolean', 'function_return', null, null, 'N', '0', 'admin', '2020-03-23 21:28:33', 'ry', '2020-03-23 21:28:40', '函数返回值类型');
+INSERT INTO `sys_dict_data` VALUES ('34', '4', '双精度类型', 'double', 'function_return', null, null, 'N', '0', 'admin', '2020-03-25 10:19:27', 'ry', '2020-03-25 10:19:39', '函数返回值类型');
 
 -- ----------------------------
 -- Table structure for sys_dict_type
@@ -402,7 +415,7 @@ CREATE TABLE `sys_dict_type` (
   `remark` varchar(500) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`dict_id`),
   UNIQUE KEY `dict_type` (`dict_type`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COMMENT='字典类型表';
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COMMENT='字典类型表';
 
 -- ----------------------------
 -- Records of sys_dict_type
@@ -417,6 +430,8 @@ INSERT INTO `sys_dict_type` VALUES ('7', '通知类型', 'sys_notice_type', '0',
 INSERT INTO `sys_dict_type` VALUES ('8', '通知状态', 'sys_notice_status', '0', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '通知状态列表');
 INSERT INTO `sys_dict_type` VALUES ('9', '操作类型', 'sys_oper_type', '0', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '操作类型列表');
 INSERT INTO `sys_dict_type` VALUES ('10', '系统状态', 'sys_common_status', '0', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '登录状态列表');
+INSERT INTO `sys_dict_type` VALUES ('11', '规则审核阶段', 'drools_group_type', '0', 'admin', '2020-03-23 21:21:34', 'ry', '2020-03-23 21:21:44', '规则审核阶段');
+INSERT INTO `sys_dict_type` VALUES ('12', '函数返回值类型', 'function_return', '0', 'admin', '2020-03-23 21:24:21', 'ry', '2020-03-23 21:24:28', '函数返回值类型');
 
 -- ----------------------------
 -- Table structure for sys_job
@@ -481,7 +496,7 @@ CREATE TABLE `sys_logininfor` (
   `msg` varchar(255) DEFAULT '' COMMENT '提示消息',
   `login_time` datetime DEFAULT NULL COMMENT '访问时间',
   PRIMARY KEY (`info_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COMMENT='系统访问记录';
+) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8mb4 COMMENT='系统访问记录';
 
 -- ----------------------------
 -- Records of sys_logininfor
@@ -498,6 +513,36 @@ INSERT INTO `sys_logininfor` VALUES ('9', 'admin', '127.0.0.1', '内网IP', 'Fir
 INSERT INTO `sys_logininfor` VALUES ('10', 'admin', '127.0.0.1', '内网IP', 'Firefox 7', 'Windows 10', '1', '验证码已失效', '2020-03-07 20:42:44');
 INSERT INTO `sys_logininfor` VALUES ('11', 'admin', '127.0.0.1', '内网IP', 'Firefox 7', 'Windows 10', '0', '登录成功', '2020-03-07 20:42:52');
 INSERT INTO `sys_logininfor` VALUES ('12', 'admin', '127.0.0.1', '内网IP', 'Firefox 7', 'Windows 10', '0', '登录成功', '2020-03-07 22:01:00');
+INSERT INTO `sys_logininfor` VALUES ('13', 'admin', '127.0.0.1', '内网IP', 'Firefox 7', 'Windows 10', '1', '验证码错误', '2020-03-09 15:51:47');
+INSERT INTO `sys_logininfor` VALUES ('14', 'admin', '127.0.0.1', '内网IP', 'Firefox 7', 'Windows 10', '1', '验证码错误', '2020-03-09 15:51:49');
+INSERT INTO `sys_logininfor` VALUES ('15', 'admin', '127.0.0.1', '内网IP', 'Firefox 7', 'Windows 10', '0', '登录成功', '2020-03-09 15:51:57');
+INSERT INTO `sys_logininfor` VALUES ('16', 'admin', '127.0.0.1', '内网IP', 'Firefox 7', 'Windows 10', '0', '登录成功', '2020-03-09 17:14:06');
+INSERT INTO `sys_logininfor` VALUES ('17', 'admin', '127.0.0.1', '内网IP', 'Firefox 7', 'Windows 10', '0', '登录成功', '2020-03-09 18:59:11');
+INSERT INTO `sys_logininfor` VALUES ('18', 'admin', '127.0.0.1', '内网IP', 'Firefox 7', 'Windows 10', '0', '登录成功', '2020-03-09 20:39:32');
+INSERT INTO `sys_logininfor` VALUES ('19', 'admin', '127.0.0.1', '内网IP', 'Firefox 7', 'Windows 10', '0', '登录成功', '2020-03-09 22:27:43');
+INSERT INTO `sys_logininfor` VALUES ('20', 'admin', '127.0.0.1', '内网IP', 'Firefox 7', 'Windows 10', '0', '登录成功', '2020-03-10 07:32:59');
+INSERT INTO `sys_logininfor` VALUES ('21', 'admin', '127.0.0.1', '内网IP', 'Firefox 7', 'Windows 10', '0', '登录成功', '2020-03-10 09:41:59');
+INSERT INTO `sys_logininfor` VALUES ('22', 'admin', '127.0.0.1', '内网IP', 'Firefox 7', 'Windows 10', '0', '登录成功', '2020-03-10 16:11:55');
+INSERT INTO `sys_logininfor` VALUES ('23', 'admin', '127.0.0.1', '内网IP', 'Firefox 7', 'Windows 10', '0', '登录成功', '2020-03-10 16:57:46');
+INSERT INTO `sys_logininfor` VALUES ('24', 'admin', '127.0.0.1', '内网IP', 'Firefox 7', 'Windows 10', '1', '验证码已失效', '2020-03-12 15:09:46');
+INSERT INTO `sys_logininfor` VALUES ('25', 'admin', '127.0.0.1', '内网IP', 'Firefox 7', 'Windows 10', '0', '登录成功', '2020-03-12 15:10:09');
+INSERT INTO `sys_logininfor` VALUES ('26', 'admin', '127.0.0.1', '内网IP', 'Firefox 7', 'Windows 10', '1', '验证码错误', '2020-03-12 16:46:47');
+INSERT INTO `sys_logininfor` VALUES ('27', 'admin', '127.0.0.1', '内网IP', 'Firefox 7', 'Windows 10', '0', '登录成功', '2020-03-12 16:46:53');
+INSERT INTO `sys_logininfor` VALUES ('28', 'admin', '127.0.0.1', '内网IP', 'Firefox 7', 'Windows 10', '1', '验证码错误', '2020-03-12 20:39:59');
+INSERT INTO `sys_logininfor` VALUES ('29', 'admin', '127.0.0.1', '内网IP', 'Firefox 7', 'Windows 10', '0', '登录成功', '2020-03-12 20:40:08');
+INSERT INTO `sys_logininfor` VALUES ('30', 'admin', '127.0.0.1', '内网IP', 'Firefox 7', 'Windows 10', '0', '登录成功', '2020-03-13 20:48:48');
+INSERT INTO `sys_logininfor` VALUES ('31', 'admin', '127.0.0.1', '内网IP', 'Firefox 7', 'Windows 10', '1', '验证码已失效', '2020-03-16 15:08:30');
+INSERT INTO `sys_logininfor` VALUES ('32', 'admin', '127.0.0.1', '内网IP', 'Firefox 7', 'Windows 10', '0', '登录成功', '2020-03-16 15:08:30');
+INSERT INTO `sys_logininfor` VALUES ('33', 'admin', '127.0.0.1', '内网IP', 'Firefox 7', 'Windows 10', '0', '登录成功', '2020-03-19 16:43:36');
+INSERT INTO `sys_logininfor` VALUES ('34', 'admin', '127.0.0.1', '内网IP', 'Firefox 7', 'Windows 10', '0', '登录成功', '2020-03-23 11:26:59');
+INSERT INTO `sys_logininfor` VALUES ('35', 'admin', '127.0.0.1', '内网IP', 'Firefox 7', 'Windows 10', '1', '验证码错误', '2020-03-23 14:53:05');
+INSERT INTO `sys_logininfor` VALUES ('36', 'admin', '127.0.0.1', '内网IP', 'Firefox 7', 'Windows 10', '0', '登录成功', '2020-03-23 14:53:15');
+INSERT INTO `sys_logininfor` VALUES ('37', 'admin', '127.0.0.1', '内网IP', 'Firefox 7', 'Windows 10', '0', '登录成功', '2020-03-25 16:27:17');
+INSERT INTO `sys_logininfor` VALUES ('38', 'admin', '127.0.0.1', '内网IP', 'Firefox 7', 'Windows 10', '0', '登录成功', '2020-03-26 10:54:32');
+INSERT INTO `sys_logininfor` VALUES ('39', 'admin', '127.0.0.1', '内网IP', 'Firefox 7', 'Windows 10', '0', '登录成功', '2020-03-26 12:33:02');
+INSERT INTO `sys_logininfor` VALUES ('40', 'admin', '127.0.0.1', '内网IP', 'Firefox 7', 'Windows 10', '0', '登录成功', '2020-03-26 13:52:28');
+INSERT INTO `sys_logininfor` VALUES ('41', 'admin', '127.0.0.1', '内网IP', 'Firefox 7', 'Windows 10', '0', '登录成功', '2020-03-26 16:36:51');
+INSERT INTO `sys_logininfor` VALUES ('42', 'admin', '127.0.0.1', '内网IP', 'Firefox 7', 'Windows 10', '0', '登录成功', '2020-03-26 17:22:55');
 
 -- ----------------------------
 -- Table structure for sys_menu

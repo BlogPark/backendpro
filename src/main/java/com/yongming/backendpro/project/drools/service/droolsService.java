@@ -13,6 +13,8 @@ public interface droolsService {
   int editRule(RuleModel ruleModel);
   // 添加规则
   int addNewRule(RuleModel ruleModel);
+  // 查询单个规则信息
+  RuleResponVO getSingleRule(String id);
   // 获取所有模板
   PageInfo<TemplatesModel> getTemplateList(TemplateVO templateVO);
   // 修改模板

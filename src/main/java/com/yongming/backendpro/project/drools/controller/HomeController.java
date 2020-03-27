@@ -71,6 +71,29 @@ public class HomeController {
   public PageInfo<RuleModel> getRuleList(@RequestBody RuleVO ruleVO) {
     return droolsService.getAllRulesForPage(ruleVO);
   }
+
+  @GetMapping("/selectsinglerule")
+  public RuleResponVO selectSingleRuleInfo(@RequestParam("id") String id) {
+    return droolsService.getSingleRule(id);
+  }
+
+  @PostMapping("/addrule")
+  public AjaxResult addRule(@RequestBody RuleModel ruleModel) {
+    if (droolsService.addNewRule(ruleModel) > 0) {
+      return AjaxResult.success("success");
+    } else {
+      return AjaxResult.error("添加失败");
+    }
+  }
+
+  @PostMapping("/editrule")
+  public AjaxResult editRule(@RequestBody RuleModel ruleModel) {
+    if (droolsService.editRule(ruleModel) > 0) {
+      return AjaxResult.success("success");
+    } else {
+      return AjaxResult.error("添加失败");
+    }
+  }
   // endregion
   // region 模板信息
   @PostMapping("/templatelist")

@@ -46,8 +46,33 @@ public class droolsServiceImpl implements droolsService {
 
   @Override
   public int addNewRule(RuleModel ruleModel) {
+    ruleModel.setCreateTime(new Date());
     int rowcount = ruleMapper.addRule(ruleModel);
     return rowcount;
+  }
+
+  @Override
+  public RuleResponVO getSingleRule(String id) {
+    RuleModel ruleModel = ruleMapper.getRuleById(Integer.valueOf(id));
+    List<EntityModel> quoteEntities = new ArrayList<>();
+    if (!StringUtils.isBlank(ruleModel.getQuoteEntities())) {
+      quoteEntities =
+          entityMapper.getEntityListByIds(Arrays.asList(ruleModel.getQuoteEntities().split(",")));
+    }
+    List<FunctionModel> quoteFunction = new ArrayList<>();
+    if (!StringUtils.isBlank(ruleModel.getQuoteFunctions())) {
+      functionMapper.getFunctionByIds(Arrays.asList(ruleModel.getQuoteFunctions().split(",")));
+    }
+    TemplatesModel templatesModel = null;
+    if (ruleModel.getTemplateId() != 0) {
+      templatesModel = templatesMapper.getTemplateModel(String.valueOf(ruleModel.getTemplateId()));
+    }
+    RuleResponVO ruleResponVO = new RuleResponVO();
+    ruleResponVO.setRule(ruleModel);
+    ruleResponVO.setQuoteEntities(quoteEntities);
+    ruleResponVO.setQuoteFunctions(quoteFunction);
+    ruleResponVO.setTemplate(templatesModel);
+    return ruleResponVO;
   }
 
   @Override
