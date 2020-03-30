@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yongming.backendpro.project.drools.mapper.ProductMapper">
-    <resultMap id="rulemap" type="com.yongming.backendpro.project.drools.model.ProductModel">
+    <resultMap id="productmap" type="com.yongming.backendpro.project.drools.model.ProductModel">
         <id column="id" property="id"/>
         <result column="productcode" property="productCode"/>
         <result column="productname" property="productName"/>
@@ -11,6 +11,13 @@
         <result column="blogpackage" property="blogPackage"/>
         <result column="quoterules" property="quoteRules"/>
         <result column="createtime" property="createTime"/>
+    </resultMap>
+    <resultMap id="productrulemap" type="com.yongming.backendpro.project.drools.model.ProductRuleModel">
+        <id column="id" property="id"/>
+        <result column="productid" property="productId"/>
+        <result column="productcode" property="productCode"/>
+        <result column="ruleid" property="ruleId"/>
+        <result column="orderindex" property="orderIndex"/>
     </resultMap>
     <sql id="basecolumn">
         id
@@ -23,10 +30,29 @@
         quoterules,
         createtime
     </sql>
-    <select id="getProductList" resultMap="rulemap">
+    <sql id="productrulecolumn">
+        id
+        ,
+        productid,
+        productcode,
+        ruleid,
+        orderindex
+    </sql>
+    <select id="getProductList" resultMap="productmap">
         select
         <include refid="basecolumn"/>
         from drools_product
+        <where>
+            <if test="id!=0">
+                id=#{id}
+            </if>
+            <if test="productCode!=null and productCode!=''">
+                productcode=#{productCode}
+            </if>
+            <if test="productName!=null and productName!=''">
+                productName=#{productName}
+            </if>
+        </where>
     </select>
 
     <select id="getProductById" resultType="com.yongming.backendpro.project.drools.model.ProductModel"
@@ -66,18 +92,65 @@
 
     <update id="updateProductById" parameterType="com.yongming.backendpro.project.drools.model.RuleModel">
         update drools_product
-        set productcode=#{productCode}
-                ,
-            productname=#{productName}
-                ,
-            versioncode=#{versionCode}
-                ,
-            rulefilepath=#{ruleFilePath}
-                ,
-            quoterules=#{quoteRules}
-                ,
-            blogpackage=#{blogPackage}
+        <set>
+            <if test="productCode!=null and productCode!=''">
+                productcode=#{productCode},
+            </if>
+            <if test="productName!=null and productName!=''">
+                productname=#{productName},
+            </if>
+            <if test="versionCode!=null and versionCode!=''">
+                versioncode=#{versionCode},
+            </if>
+            <if test="ruleFilePath!=null and ruleFilePath!=''">
+                rulefilepath=#{ruleFilePath},
+            </if>
+            <if test="quoteRules!=null and quoteRules!=''">
+                quoterules=#{quoteRules},
+            </if>
+            <if test="blogPackage!=null and blogPackage!=''">
+                blogpackage=#{blogPackage}
+            </if>
+        </set>
         where id = #{id}
     </update>
 
+    <select id="getSingleProductById" resultType="com.yongming.backendpro.project.drools.model.ProductModel"
+            parameterType="String">
+        select
+        <include refid="basecolumn"/>
+        from drools_product
+        where id=#{id}
+    </select>
+
+    <select id="getProductRuleByProductId" resultMap="productrulemap" parameterType="String">
+        select
+        <include refid="productrulecolumn"/>
+        from drools_product_rule
+        where productid=#{productId}
+    </select>
+
+    <insert id="addNewProductRule" parameterType="com.yongming.backendpro.project.drools.model.ProductRuleModel">
+        insert into drools_product_rule(productid, productcode, ruleid, orderindex
+        )
+        value
+        (
+        #{productId}
+        ,
+        #{productCode}
+        ,
+        #{ruleId}
+        ,
+        #{orderIndex}
+        )
+    </insert>
+
+    <update id="updateProductRuleByID" parameterType="com.yongming.backendpro.project.drools.model.ProductRuleModel">
+        update drools_product_rule
+        set productid=#{productId},
+            productcode=#{productCode},
+            ruleid= #{ruleId},
+            orderindex=#{orderIndex}
+        where id = #{id}
+    </update>
 </mapper>

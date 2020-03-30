@@ -65,7 +65,6 @@ public class HomeController {
     return droolsService.getEntitiesByIds(commonRequestVO);
   }
   // endregion
-
   // region 规则信息
   @PostMapping("/rulelist")
   public PageInfo<RuleModel> getRuleList(@RequestBody RuleVO ruleVO) {
@@ -192,6 +191,35 @@ public class HomeController {
   @GetMapping("/selectgrouplist")
   public List<GroupModel> selectGroupList() {
     return droolsService.getGroupListForSelect();
+  }
+  // endregion
+  // region 产品信息
+  @PostMapping("/getproductlist")
+  public PageInfo<ProductModel> getProductListForPage(@RequestBody ProductVO productVO) {
+    return droolsService.getProductListForPage(productVO);
+  }
+
+  @PostMapping("/addproduct")
+  public AjaxResult addNewProduct(@RequestBody ProductModel productModel) {
+    if (droolsService.addNewProduct(productModel) > 0) {
+      return AjaxResult.success("success");
+    } else {
+      return AjaxResult.error("添加产品失败");
+    }
+  }
+
+  @PostMapping("/editprosuct")
+  public AjaxResult editProduct(@RequestBody ProductModel productModel) {
+    if (droolsService.editProduct(productModel) > 0) {
+      return AjaxResult.success("success");
+    } else {
+      return AjaxResult.error("修改失败");
+    }
+  }
+
+  @GetMapping("getproductinfo")
+  public ProductResponVO getSingleProduct(@RequestParam("id") String id) {
+    return droolsService.getSingleProduct(id);
   }
   // endregion
 

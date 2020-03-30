@@ -59,4 +59,16 @@ public interface droolsService {
   List<GroupModel> getGroupListForSelect();
   // 查询实体或者函数列表
   PageInfo<CommonResponseVO> getList(CommonRequestVO commonRequestVO);
+  // 查询产品列表
+  PageInfo<ProductModel> getProductListForPage(ProductVO productVO);
+  // 添加产品信息
+  int addNewProduct(ProductModel productModel);
+  // 修改产品信息
+  int editProduct(ProductModel productModel);
+  // 查询单个产品信息
+  ProductResponVO getSingleProduct(String id);
+  // 添加产品规则
+  int addNewProductRule(ProductRuleModel productRuleModel);
+  // 编辑产品规则
+  int editProductRule(ProductRuleModel productRuleModel);
 }

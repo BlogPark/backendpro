@@ -5,6 +5,7 @@ import com.yongming.backendpro.common.constant.HttpStatus;
 import com.yongming.backendpro.common.utils.ServletUtils;
 import com.yongming.backendpro.common.utils.StringUtils;
 import com.yongming.backendpro.framework.web.domain.AjaxResult;
+import com.yongming.backendpro.httpglobal.HttpGlobalResponse;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
@@ -29,6 +30,7 @@ public class AuthenticationEntryPointImpl implements AuthenticationEntryPoint, S
       throws IOException {
     int code = HttpStatus.UNAUTHORIZED;
     String msg = StringUtils.format("请求访问：{}，认证失败，无法访问系统资源", request.getRequestURI());
-    ServletUtils.renderString(response, JSON.toJSONString(AjaxResult.error(code, msg)));
+    HttpGlobalResponse httpGlobalResponse = HttpGlobalResponse.succeed(AjaxResult.error(code, msg));
+    ServletUtils.renderString(response, JSON.toJSONString(httpGlobalResponse));
   }
 }

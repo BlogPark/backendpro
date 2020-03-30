@@ -23,6 +23,7 @@ public class droolsServiceImpl implements droolsService {
   @Autowired TemplatesMapper templatesMapper;
   @Autowired FunctionMapper functionMapper;
   @Autowired GroupMapper groupMapper;
+  @Autowired ProductMapper productMapper;
 
   @Override
   public PageInfo<RuleModel> getAllRulesForPage(RuleVO ruleVO) {
@@ -61,7 +62,8 @@ public class droolsServiceImpl implements droolsService {
     }
     List<FunctionModel> quoteFunction = new ArrayList<>();
     if (!StringUtils.isBlank(ruleModel.getQuoteFunctions())) {
-      functionMapper.getFunctionByIds(Arrays.asList(ruleModel.getQuoteFunctions().split(",")));
+      quoteFunction =
+          functionMapper.getFunctionByIds(Arrays.asList(ruleModel.getQuoteFunctions().split(",")));
     }
     TemplatesModel templatesModel = null;
     if (ruleModel.getTemplateId() != 0) {
@@ -259,5 +261,47 @@ public class droolsServiceImpl implements droolsService {
     }
     PageInfo<CommonResponseVO> page = new PageInfo<>(list);
     return page;
+  }
+
+  @Override
+  public PageInfo<ProductModel> getProductListForPage(ProductVO productVO) {
+    PageHelper.startPage(productVO.getPageIndex(), productVO.getPageSize());
+    ProductModel productModel = new ProductModel();
+    productModel.setId(productVO.getId());
+    productModel.setProductCode(productVO.getProductCode());
+    productModel.setProductName(productVO.getProductName());
+    List<ProductModel> list = productMapper.getProductList(productModel);
+    // 用PageInfo对结果进行包装
+    PageInfo<ProductModel> page = new PageInfo<>(list);
+    return page;
+  }
+
+  @Override
+  public int addNewProduct(ProductModel productModel) {
+    productModel.setCreateTime(new Date());
+    return productMapper.addProduct(productModel);
+  }
+
+  @Override
+  public int editProduct(ProductModel productModel) {
+    return productMapper.updateProductById(productModel);
+  }
+
+  @Override
+  public ProductResponVO getSingleProduct(String id) {
+    ProductModel productModel = productMapper.getProductById(Integer.valueOf(id));
+    ProductResponVO productResponVO = new ProductResponVO();
+    productResponVO.setProduct(productModel);
+    return productResponVO;
+  }
+
+  @Override
+  public int addNewProductRule(ProductRuleModel productRuleModel) {
+    return productMapper.addNewProductRule(productRuleModel);
+  }
+
+  @Override
+  public int editProductRule(ProductRuleModel productRuleModel) {
+    return productMapper.updateProductRuleByID(productRuleModel);
   }
 }

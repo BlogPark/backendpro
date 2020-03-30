@@ -10,6 +10,7 @@ import com.yongming.backendpro.framework.manager.factory.AsyncFactory;
 import com.yongming.backendpro.framework.security.LoginUser;
 import com.yongming.backendpro.framework.security.service.TokenService;
 import com.yongming.backendpro.framework.web.domain.AjaxResult;
+import com.yongming.backendpro.httpglobal.HttpGlobalResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.Authentication;
@@ -47,6 +48,8 @@ public class LogoutSuccessHandlerImpl implements LogoutSuccessHandler {
       AsyncManager.me().execute(AsyncFactory.recordLogininfor(userName, Constants.LOGOUT, "退出成功"));
     }
     ServletUtils.renderString(
-        response, JSON.toJSONString(AjaxResult.error(HttpStatus.SUCCESS, "退出成功")));
+        response,
+        JSON.toJSONString(
+            HttpGlobalResponse.succeed(AjaxResult.error(HttpStatus.SUCCESS, "退出成功"))));
   }
 }

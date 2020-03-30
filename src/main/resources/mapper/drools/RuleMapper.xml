@@ -12,6 +12,7 @@
         <result column="quoteentities" property="quoteEntities"/>
         <result column="createtime" property="createTime"/>
         <result column="quotefunctions" property="quoteFunctions"/>
+        <result column="rulestatus" property="ruleStatus"/>
     </resultMap>
     <sql id="basecolumn">
         id
@@ -23,7 +24,8 @@
         rulecontent,
         quoteentities,
         createtime,
-        quotefunctions
+        quotefunctions,
+        rulestatus
     </sql>
     <select id="getRulesByIds" resultMap="rulemap">
         select
@@ -44,17 +46,19 @@
     </select>
 
     <insert id="addRule">
-        insert into drools_rules(rulecode,
+        insert into drools_rules(rulecode, rulename,
                                  rulegroup,
                                  templateid,
                                  rulecontent,
                                  quoteentities,
                                  createtime,
-                                 quotefunctions
+                                 quotefunctions, rulestatus
         )
         value
         (
         #{ruleCode}
+        ,
+        #{ruleName}
         ,
         #{ruleGroup}
         ,
@@ -64,15 +68,20 @@
         ,
         #{quoteEntities}
         ,
-        #{createtime}
+        #{createTime}
         ,
         #{quoteFunctions}
+        ,
+        #{ruleStatus}
         )
     </insert>
 
     <update id="updateRuleById" parameterType="com.yongming.backendpro.project.drools.model.RuleModel">
         update drools_rules
         <set>
+            <if test="ruleStatus!=0">
+                rulestatus=#{ruleStatus},
+            </if>
             <if test="ruleCode != null and ruleCode!='' ">
                 rulecode=#{ruleCode},
             </if>
@@ -89,7 +98,7 @@
                 quoteentities=#{quoteEntities},
             </if>
             <if test="quoteFunctions !=null and quoteFunctions!=''">
-                quotefunctions#{quoteFunctions}
+                quotefunctions=#{quoteFunctions}
             </if>
         </set>
         where id = #{id}
@@ -111,6 +120,9 @@
             </if>
             <if test="ruleGroup != null and ruleGroup != ''">
                 and rulegroup=#{ruleGroup}
+            </if>
+            <if test="ruleStatus!=0">
+                and rulestatus=#{ruleStatus},
             </if>
         </where>
     </select>
