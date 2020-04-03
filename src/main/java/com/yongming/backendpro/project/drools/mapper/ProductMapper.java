@@ -69,4 +69,12 @@ public interface ProductMapper {
    * @return
    */
   int updateProductRuleByID(ProductRuleModel productRuleModel);
+
+  /**
+   * 按照产品编码查询产品信息
+   *
+   * @param productCode
+   * @return
+   */
+  ProductModel getProductByProductCode(@Param("productCode") String productCode);
 }

@@ -4,11 +4,6 @@ import com.yongming.backendpro.project.drools.droolsmodel.DroolsTestModel;
 
 public interface droolsBusinessService {
 
-  // 查询所有产品
-  // 查询单个产品的规则列表信息
-  // 删除产品的规则信息
-  // 添加产品的规则信息
-  // 编辑产品的规则顺序信息
   /**
    * 创建产品规则文件
    *
@@ -26,4 +21,12 @@ public interface droolsBusinessService {
   DroolsTestModel fireRuleFile(String productCode);
 
   void buildRules(String s);
+
+  /**
+   * 组装产品关联规则信息写入redis
+   *
+   * @param productCode
+   * @return
+   */
+  String buildRuleToRedis(String productCode);
 }

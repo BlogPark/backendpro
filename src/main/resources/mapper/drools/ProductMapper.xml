@@ -128,6 +128,7 @@
         <include refid="productrulecolumn"/>
         from drools_product_rule
         where productid=#{productId}
+        order by orderindex asc
     </select>
 
     <insert id="addNewProductRule" parameterType="com.yongming.backendpro.project.drools.model.ProductRuleModel">
@@ -153,4 +154,13 @@
             orderindex=#{orderIndex}
         where id = #{id}
     </update>
+
+    <select id="getProductByProductCode" parameterType="String"
+            resultType="com.yongming.backendpro.project.drools.model.ProductModel">
+        select
+        <include refid="basecolumn"/>
+        from drools_product
+        where productcode=#{productCode}
+        limit 1
+    </select>
 </mapper>

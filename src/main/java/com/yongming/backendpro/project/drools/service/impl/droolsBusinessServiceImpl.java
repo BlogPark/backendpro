@@ -1,11 +1,9 @@
 package com.yongming.backendpro.project.drools.service.impl;
 
+import com.yongming.backendpro.framework.redis.RedisCache;
 import com.yongming.backendpro.project.drools.droolsmodel.DroolsTestModel;
 import com.yongming.backendpro.project.drools.mapper.*;
-import com.yongming.backendpro.project.drools.model.EntityModel;
-import com.yongming.backendpro.project.drools.model.FunctionModel;
-import com.yongming.backendpro.project.drools.model.ProductModel;
-import com.yongming.backendpro.project.drools.model.RuleModel;
+import com.yongming.backendpro.project.drools.model.*;
 import com.yongming.backendpro.project.drools.service.droolsBusinessService;
 import org.apache.commons.lang3.StringUtils;
 import org.kie.api.KieServices;
@@ -34,6 +32,8 @@ public class droolsBusinessServiceImpl implements droolsBusinessService {
   @Autowired private TemplatesMapper templatesMapper;
   @Autowired private FunctionMapper functionMapper;
   @Autowired private EntityMapper entityMapper;
+
+  @Autowired private RedisCache redisCache;
 
   @Autowired private KieServices kieServices;
 
@@ -99,6 +99,95 @@ public class droolsBusinessServiceImpl implements droolsBusinessService {
 
   @Override
   public void buildRules(String s) {}
+
+  /**
+   * 组装产品规则信息 写入redis
+   *
+   * @param productCode
+   * @return
+   */
+  @Override
+  public String buildRuleToRedis(String productCode) {
+    // 查询产品信息
+    ProductModel productModel = productMapper.getProductByProductCode(productCode);
+    if (productModel == null) {
+      return "没有查到相关产品信息";
+    }
+    // 查询产品的规则信息
+    List<ProductRuleModel> productRuleList =
+        productMapper.getProductRuleByProductId(String.valueOf(productModel.getId()));
+    if (productRuleList.size() < 1) {
+      return "该产品没有配置相关规则";
+    }
+    // 声明变量信息
+    // 引用字符串
+    StringBuilder importString = new StringBuilder();
+    // 函数字符串
+    StringBuilder functionString = new StringBuilder();
+    // 规则字符串
+    StringBuilder ruleString = new StringBuilder();
+    // 已经处理的实体引用
+    List<String> entityList = new ArrayList<>();
+    // 已经处理的函数引用
+    List<String> functionList = new ArrayList<>();
+    for (ProductRuleModel item : productRuleList) {
+      // 查询产品关联的规则明细列表
+      RuleModel ruleModel = ruleMapper.getRuleById(item.getRuleId());
+      if (ruleModel == null) {
+        continue;
+      }
+      List<String> quoteEntityList =
+          StringUtils.isBlank(ruleModel.getQuoteEntities())
+              ? new ArrayList<>()
+              : Arrays.asList(ruleModel.getQuoteEntities().split(","));
+      List<String> quoteFunctionList =
+          StringUtils.isBlank(ruleModel.getQuoteFunctions())
+              ? new ArrayList<>()
+              : Arrays.asList(ruleModel.getQuoteFunctions().split(","));
+      // 查询产品关联的函数信息
+      if (quoteFunctionList.size() > 0) {
+        for (String idItem : quoteFunctionList) {
+          if (!functionList.contains(idItem)) {
+            FunctionModel functionModel = functionMapper.getFunctionByID(Integer.valueOf(idItem));
+            if (functionModel != null) {
+              List<String> entitys =
+                  StringUtils.isBlank(functionModel.getQuoteEntities())
+                      ? new ArrayList<>()
+                      : Arrays.asList(functionModel.getQuoteEntities().split(","));
+              if (entitys.size() > 0) {
+                quoteEntityList.removeAll(entitys);
+                quoteEntityList.addAll(entitys);
+              }
+              String functionContent = functionModel.getFunctionContent().replaceAll("###", " ");
+              functionString.append(functionContent);
+            }
+            functionList.add(idItem);
+          }
+        }
+      }
+      // 查询产品规则关联的实体信息
+      if (quoteEntityList.size() > 0) {
+        for (String entityItem : quoteEntityList) {
+          if (!entityList.contains(entityItem)) {
+            EntityModel entityModel = entityMapper.getSingleEntityByID(Integer.valueOf(entityItem));
+            if (entityModel != null) {
+              importString.append(entityModel.getEntityPackage());
+            }
+            entityList.add(entityItem);
+          }
+        }
+      }
+      ruleString.append(ruleModel.getRuleContent());
+    }
+    // 组装规则文本
+    String ruleVersionString =
+        importString.toString() + " " + functionString.toString() + " " + ruleString.toString();
+    String redisProductKey = productModel.getProductCode() + "_" + productModel.getVersionCode();
+    System.out.println("组装完成的规则字符串：" + ruleVersionString);
+    // 按照版本号写入redis
+    redisCache.setCacheObject(redisProductKey, ruleVersionString);
+    return "success";
+  }
 
   private String getRuleContent(String ruleListStr, String pageString) {
     StringBuilder stringBuilder = new StringBuilder();
