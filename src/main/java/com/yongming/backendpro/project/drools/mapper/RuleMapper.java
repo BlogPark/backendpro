@@ -1,6 +1,7 @@
 package com.yongming.backendpro.project.drools.mapper;
 
 import com.yongming.backendpro.project.drools.model.RuleModel;
+import com.yongming.backendpro.project.drools.vo.CommonResponseVO;
 
 import java.util.List;
 
@@ -45,4 +46,5 @@ public interface RuleMapper {
    */
   List<RuleModel> getRuleList(RuleModel ruleModel);
 
+  List<CommonResponseVO> getRuleListForQuote();
 }

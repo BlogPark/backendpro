@@ -14,6 +14,11 @@
         <result column="quotefunctions" property="quoteFunctions"/>
         <result column="rulestatus" property="ruleStatus"/>
     </resultMap>
+    <resultMap id="commonmap" type="com.yongming.backendpro.project.drools.vo.CommonResponseVO">
+        <id column="id" property="id"/>
+        <result column="rulecode" property="name"/>
+        <result column="rulename" property="desc"/>
+    </resultMap>
     <sql id="basecolumn">
         id
         ,
@@ -52,27 +57,26 @@
                                  rulecontent,
                                  quoteentities,
                                  createtime,
-                                 quotefunctions, rulestatus
-        )
-        value
-        (
-        #{ruleCode}
-        ,
-        #{ruleName}
-        ,
-        #{ruleGroup}
-        ,
-        #{templateId}
-        ,
-        #{ruleContent}
-        ,
-        #{quoteEntities}
-        ,
-        #{createTime}
-        ,
-        #{quoteFunctions}
-        ,
-        #{ruleStatus}
+                                 quotefunctions, rulestatus)
+            value
+            (
+            #{ruleCode}
+            ,
+            #{ruleName}
+            ,
+            #{ruleGroup}
+            ,
+            #{templateId}
+            ,
+            #{ruleContent}
+            ,
+            #{quoteEntities}
+            ,
+            #{createTime}
+            ,
+            #{quoteFunctions}
+            ,
+            #{ruleStatus}
         )
     </insert>
 
@@ -125,5 +129,12 @@
                 and rulestatus=#{ruleStatus},
             </if>
         </where>
+    </select>
+    <select id="getRuleListForQuote" resultMap="commonmap">
+        select id
+                ,
+               rulecode,
+               rulename
+        from drools_rules
     </select>
 </mapper>

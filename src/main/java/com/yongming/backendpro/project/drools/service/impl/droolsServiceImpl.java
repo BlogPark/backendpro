@@ -78,6 +78,12 @@ public class droolsServiceImpl implements droolsService {
   }
 
   @Override
+  public List<RuleModel> getRuleByIds(CommonRequestVO commonRequestVO) {
+    List<RuleModel> ruleModels = ruleMapper.getRulesByIds((commonRequestVO.getIdList()));
+    return ruleModels;
+  }
+
+  @Override
   public PageInfo<TemplatesModel> getTemplateList(TemplateVO templateVO) {
     PageHelper.startPage(templateVO.getPageIndex(), templateVO.getPageSize());
     TemplatesModel templatesModel = new TemplatesModel();
@@ -258,6 +264,9 @@ public class droolsServiceImpl implements droolsService {
     } else if (commonRequestVO.getType() == 1) {
       // 查询函数信息
       list = functionMapper.getFunctionList();
+    } else if (commonRequestVO.getType() == 3) {
+      // 查询规则信息
+      list = ruleMapper.getRuleListForQuote();
     }
     PageInfo<CommonResponseVO> page = new PageInfo<>(list);
     return page;
@@ -292,6 +301,14 @@ public class droolsServiceImpl implements droolsService {
     ProductModel productModel = productMapper.getProductById(Integer.valueOf(id));
     ProductResponVO productResponVO = new ProductResponVO();
     productResponVO.setProduct(productModel);
+    if(!StringUtils.isBlank(productModel.getQuoteRules())){
+      List<ProductRuleModel> productRuleModelList=productMapper.getProductRuleByProductId(String.valueOf(productModel.getId()));
+      List<RuleModel> ruleModelList=new ArrayList<>();
+      for(ProductRuleModel ruleModel:productRuleModelList){
+        ruleModelList.add(ruleMapper.getRuleById(ruleModel.getRuleId()));
+      }
+      productResponVO.setRules(ruleModelList);
+    }
     return productResponVO;
   }
 

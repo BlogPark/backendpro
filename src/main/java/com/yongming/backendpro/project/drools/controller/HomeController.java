@@ -93,6 +93,10 @@ public class HomeController {
       return AjaxResult.error("添加失败");
     }
   }
+  @PostMapping("/getruleids")
+  public List<RuleModel> getRuleListByIds(@RequestBody CommonRequestVO commonRequestVO) {
+    return droolsService.getRuleByIds(commonRequestVO);
+  }
   // endregion
   // region 模板信息
   @PostMapping("/templatelist")
@@ -226,5 +230,24 @@ public class HomeController {
   @PostMapping("/getquotelist")
   private PageInfo<CommonResponseVO> getListData(@RequestBody CommonRequestVO commonRequestVO) {
     return droolsService.getList(commonRequestVO);
+  }
+
+  @PostMapping("/buildrule")
+  private AjaxResult buildProductRule(@RequestBody BuildVO buildVO){
+    String result=droolsBusinessService.buildRuleToRedis(buildVO.getProductCode());
+    if(result.equals("success")){
+      return AjaxResult.success("操作成功");
+    }else{
+      return AjaxResult.error("操作失败！");
+    }
+  }
+  @PostMapping("/execrule")
+  private AjaxResult execProductRule(@RequestBody BuildVO buildVO){
+    String result=droolsBusinessService.fireRuleFormRedis(buildVO.getProductCode());
+    if(result.equals("success")){
+      return AjaxResult.success("操作成功");
+    }else{
+      return AjaxResult.error("操作失败！");
+    }
   }
 }

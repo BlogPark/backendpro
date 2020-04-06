@@ -29,4 +29,11 @@ public interface droolsBusinessService {
    * @return
    */
   String buildRuleToRedis(String productCode);
+
+  /**
+   * 从Redis加载规则内容执行规则
+   * @param productCode
+   * @return
+   */
+  String fireRuleFormRedis(String productCode);
 }

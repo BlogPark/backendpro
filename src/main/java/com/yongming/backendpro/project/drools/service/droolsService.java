@@ -15,6 +15,8 @@ public interface droolsService {
   int addNewRule(RuleModel ruleModel);
   // 查询单个规则信息
   RuleResponVO getSingleRule(String id);
+  //按照ID列表查询规则
+  List<RuleModel> getRuleByIds(CommonRequestVO commonRequestVO);
   // 获取所有模板
   PageInfo<TemplatesModel> getTemplateList(TemplateVO templateVO);
   // 修改模板

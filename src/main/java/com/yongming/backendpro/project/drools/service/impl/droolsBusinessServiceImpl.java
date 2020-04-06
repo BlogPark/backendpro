@@ -11,6 +11,7 @@ import org.kie.api.builder.KieFileSystem;
 import org.kie.api.builder.KieRepository;
 import org.kie.api.builder.model.KieModuleModel;
 import org.kie.api.io.Resource;
+import org.kie.api.io.ResourceType;
 import org.kie.api.runtime.KieSession;
 import org.kie.internal.io.ResourceFactory;
 import org.kie.internal.utils.KieHelper;
@@ -186,6 +187,23 @@ public class droolsBusinessServiceImpl implements droolsBusinessService {
     System.out.println("组装完成的规则字符串：" + ruleVersionString);
     // 按照版本号写入redis
     redisCache.setCacheObject(redisProductKey, ruleVersionString);
+    return "success";
+  }
+
+  @Override
+  public String fireRuleFormRedis(String productCode) {
+    ProductModel productModel=productMapper.getProductByProductCode(productCode);
+    if(productModel==null){
+      return "fail";
+    }
+    String redisProductKey = productModel.getProductCode() + "_" + productModel.getVersionCode();
+    String ruleContent=redisCache.getCacheObject(redisProductKey);
+    KieHelper kieHelper=new KieHelper();
+    kieHelper.addContent(ruleContent, ResourceType.DRL);
+    KieSession kieSession=kieHelper.build().newKieSession();
+    int k=kieSession.fireAllRules();
+    System.out.println("共计执行"+k+"条规则信息");
+    kieSession.dispose();
     return "success";
   }
 
