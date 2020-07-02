@@ -1,17 +1,17 @@
 package com.yongming.backendpro.project.drools.controller;
 
-import com.github.pagehelper.PageInfo;
 import com.yongming.backendpro.framework.web.domain.AjaxResult;
 import com.yongming.backendpro.project.drools.droolsmodel.DroolsTestModel;
 import com.yongming.backendpro.project.drools.model.*;
 import com.yongming.backendpro.project.drools.service.droolsBusinessService;
 import com.yongming.backendpro.project.drools.service.droolsService;
 import com.yongming.backendpro.project.drools.vo.*;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
+@Api("规则引擎相关接口")
 @RestController
 @RequestMapping("/drools")
 public class HomeController {
@@ -20,60 +20,61 @@ public class HomeController {
 
   @Autowired private droolsService droolsService;
 
+  @ApiOperation("写入新规则")
   @GetMapping("/write")
-  public ResultModel writeRule() {
+  public AjaxResult writeRule() {
     droolsBusinessService.buildRules("");
     ResultModel resultModel = new ResultModel();
     resultModel.setMessage("success");
-    return resultModel;
+    return AjaxResult.success(resultModel);
   }
 
   @GetMapping("/create")
-  public ResultModel createRuleFile() {
+  public AjaxResult createRuleFile() {
     String result = droolsBusinessService.createRuleFile("");
     ResultModel resultModel = new ResultModel();
     resultModel.setMessage("success");
-    return resultModel;
+    return AjaxResult.success(resultModel);
   }
 
   @GetMapping("/execute")
-  public ResultModel execRuleFile() {
+  public AjaxResult execRuleFile() {
     DroolsTestModel droolsTestModel = droolsBusinessService.fireRuleFile("");
     ResultModel resultModel = new ResultModel();
     resultModel.setMessage(droolsTestModel.getName());
-    return resultModel;
+    return AjaxResult.success(resultModel);
   }
 
   // region 实体信息
   @PostMapping("/entitylist")
-  public PageInfo<EntityModel> getEntityList(@RequestBody EntityVO entityVO) {
-    return droolsService.getEntityList(entityVO);
+  public AjaxResult getEntityList(@RequestBody EntityVO entityVO) {
+    return AjaxResult.success(droolsService.getEntityList(entityVO));
   }
   // 查询实体下详细字段信息
   @GetMapping("/entityinfo")
-  public List<EntityDetailModel> getEntityInfo(@RequestParam("id") String id) {
-    return droolsService.getEntityInfo(id);
+  public AjaxResult getEntityInfo(@RequestParam("id") String id) {
+    return AjaxResult.success(droolsService.getEntityInfo(id));
   }
   // 查询单个实体信息
   @GetMapping("/getentity")
-  public EntityModel getsingleEntity(@RequestParam("id") String id) {
-    return droolsService.getSingleEntity(id);
+  public AjaxResult getsingleEntity(@RequestParam("id") String id) {
+    return AjaxResult.success(droolsService.getSingleEntity(id));
   }
   // 按照ids查询实体列表
   @PostMapping("/getentitisbyids")
-  public List<EntityModel> getEntityByIds(@RequestBody CommonRequestVO commonRequestVO) {
-    return droolsService.getEntitiesByIds(commonRequestVO);
+  public AjaxResult getEntityByIds(@RequestBody CommonRequestVO commonRequestVO) {
+    return AjaxResult.success(droolsService.getEntitiesByIds(commonRequestVO));
   }
   // endregion
   // region 规则信息
   @PostMapping("/rulelist")
-  public PageInfo<RuleModel> getRuleList(@RequestBody RuleVO ruleVO) {
-    return droolsService.getAllRulesForPage(ruleVO);
+  public AjaxResult getRuleList(@RequestBody RuleVO ruleVO) {
+    return AjaxResult.success(droolsService.getAllRulesForPage(ruleVO));
   }
 
   @GetMapping("/selectsinglerule")
-  public RuleResponVO selectSingleRuleInfo(@RequestParam("id") String id) {
-    return droolsService.getSingleRule(id);
+  public AjaxResult selectSingleRuleInfo(@RequestParam("id") String id) {
+    return AjaxResult.success(droolsService.getSingleRule(id));
   }
 
   @PostMapping("/addrule")
@@ -93,51 +94,52 @@ public class HomeController {
       return AjaxResult.error("添加失败");
     }
   }
+
   @PostMapping("/getruleids")
-  public List<RuleModel> getRuleListByIds(@RequestBody CommonRequestVO commonRequestVO) {
-    return droolsService.getRuleByIds(commonRequestVO);
+  public AjaxResult getRuleListByIds(@RequestBody CommonRequestVO commonRequestVO) {
+    return AjaxResult.success(droolsService.getRuleByIds(commonRequestVO));
   }
   // endregion
   // region 模板信息
   @PostMapping("/templatelist")
-  public PageInfo<TemplatesModel> getTemplatesList(@RequestBody TemplateVO templateVO) {
-    return droolsService.getTemplateList(templateVO);
+  public AjaxResult getTemplatesList(@RequestBody TemplateVO templateVO) {
+    return AjaxResult.success(droolsService.getTemplateList(templateVO));
   }
 
   @GetMapping("/gettemplate")
-  public TemplateResponseVO getSingleTemplate(@RequestParam("id") String id) {
-    return droolsService.getSingleTemplate(id);
+  public AjaxResult getSingleTemplate(@RequestParam("id") String id) {
+    return AjaxResult.success(droolsService.getSingleTemplate(id));
   }
 
   @PostMapping("/addtemplate")
-  public int addTemplate(@RequestBody TemplatesModel templatesModel) {
-    return droolsService.addNewTemplate(templatesModel);
+  public AjaxResult addTemplate(@RequestBody TemplatesModel templatesModel) {
+    return AjaxResult.success(droolsService.addNewTemplate(templatesModel));
   }
 
   @PostMapping("/updatetemplate")
-  public int updateTemplate(@RequestBody TemplatesModel templatesModel) {
-    return droolsService.editTemplate(templatesModel);
+  public AjaxResult updateTemplate(@RequestBody TemplatesModel templatesModel) {
+    return AjaxResult.success(droolsService.editTemplate(templatesModel));
   }
 
   @GetMapping("/gettemplatelist")
-  public List<TemplatesModel> getSelectTemplates() {
-    return droolsService.getTemplateForSelect();
+  public AjaxResult getSelectTemplates() {
+    return AjaxResult.success(droolsService.getTemplateForSelect());
   }
   // endregion
   // region 函数信息
   @PostMapping("/functionlist")
-  public PageInfo<FunctionModel> getFunctionList(@RequestBody FunctionVO functionVO) {
-    return droolsService.getFunctionList(functionVO);
+  public AjaxResult getFunctionList(@RequestBody FunctionVO functionVO) {
+    return AjaxResult.success(droolsService.getFunctionList(functionVO));
   }
   // 查询单个函数信息
   @GetMapping("/getfunction")
-  public FunctionModel getSingleFunction(@RequestParam("id") String id) {
-    return droolsService.getSingleFunction(id);
+  public AjaxResult getSingleFunction(@RequestParam("id") String id) {
+    return AjaxResult.success(droolsService.getSingleFunction(id));
   }
   // 查询所有函数
   @PostMapping("/getfunctionids")
-  public List<FunctionModel> getFunctionListByIds(@RequestBody CommonRequestVO commonRequestVO) {
-    return droolsService.getFunctionByIds(commonRequestVO);
+  public AjaxResult getFunctionListByIds(@RequestBody CommonRequestVO commonRequestVO) {
+    return AjaxResult.success(droolsService.getFunctionByIds(commonRequestVO));
   }
   // 添加函数信息
   @PostMapping("/addfunction")
@@ -159,19 +161,19 @@ public class HomeController {
   }
 
   @GetMapping("/getsinglefunction")
-  public FunctionResponVO getFunction(@RequestParam("id") String id) {
-    return droolsService.getFunctionById(id);
+  public AjaxResult getFunction(@RequestParam("id") String id) {
+    return AjaxResult.success(droolsService.getFunctionById(id));
   }
   // endregion
   // region 分组信息
   @PostMapping("/grouplist")
-  public PageInfo<GroupModel> getGroupList(@RequestBody GroupVO groupVO) {
-    return droolsService.getGroupList(groupVO);
+  public AjaxResult getGroupList(@RequestBody GroupVO groupVO) {
+    return AjaxResult.success(droolsService.getGroupList(groupVO));
   }
 
   @GetMapping("/getsinglegroup")
-  public GroupModel getSingleGroup(@RequestParam("id") String id) {
-    return droolsService.getSingleGroup(id);
+  public AjaxResult getSingleGroup(@RequestParam("id") String id) {
+    return AjaxResult.success(droolsService.getSingleGroup(id));
   }
 
   @PostMapping("/addgroup")
@@ -193,14 +195,14 @@ public class HomeController {
   }
 
   @GetMapping("/selectgrouplist")
-  public List<GroupModel> selectGroupList() {
-    return droolsService.getGroupListForSelect();
+  public AjaxResult selectGroupList() {
+    return AjaxResult.success(droolsService.getGroupListForSelect());
   }
   // endregion
   // region 产品信息
   @PostMapping("/getproductlist")
-  public PageInfo<ProductModel> getProductListForPage(@RequestBody ProductVO productVO) {
-    return droolsService.getProductListForPage(productVO);
+  public AjaxResult getProductListForPage(@RequestBody ProductVO productVO) {
+    return AjaxResult.success(droolsService.getProductListForPage(productVO));
   }
 
   @PostMapping("/addproduct")
@@ -222,31 +224,32 @@ public class HomeController {
   }
 
   @GetMapping("getproductinfo")
-  public ProductResponVO getSingleProduct(@RequestParam("id") String id) {
-    return droolsService.getSingleProduct(id);
+  public AjaxResult getSingleProduct(@RequestParam("id") String id) {
+    return AjaxResult.success(droolsService.getSingleProduct(id));
   }
   // endregion
 
   @PostMapping("/getquotelist")
-  private PageInfo<CommonResponseVO> getListData(@RequestBody CommonRequestVO commonRequestVO) {
-    return droolsService.getList(commonRequestVO);
+  private AjaxResult getListData(@RequestBody CommonRequestVO commonRequestVO) {
+    return AjaxResult.success(droolsService.getList(commonRequestVO));
   }
 
   @PostMapping("/buildrule")
-  private AjaxResult buildProductRule(@RequestBody BuildVO buildVO){
-    String result=droolsBusinessService.buildRuleToRedis(buildVO.getProductCode());
-    if(result.equals("success")){
+  private AjaxResult buildProductRule(@RequestBody BuildVO buildVO) {
+    String result = droolsBusinessService.buildRuleToRedis(buildVO.getProductCode());
+    if (result.equals("success")) {
       return AjaxResult.success("操作成功");
-    }else{
+    } else {
       return AjaxResult.error("操作失败！");
     }
   }
+
   @PostMapping("/execrule")
-  private AjaxResult execProductRule(@RequestBody BuildVO buildVO){
-    String result=droolsBusinessService.fireRuleFormRedis(buildVO.getProductCode());
-    if(result.equals("success")){
+  private AjaxResult execProductRule(@RequestBody BuildVO buildVO) {
+    String result = droolsBusinessService.fireRuleFormRedis(buildVO.getProductCode());
+    if (result.equals("success")) {
       return AjaxResult.success("操作成功");
-    }else{
+    } else {
       return AjaxResult.error("操作失败！");
     }
   }
